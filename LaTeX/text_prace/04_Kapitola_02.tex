@@ -1,0 +1,9 @@
+\chapter{Jadrové odhady}
+
+Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy "vyhladíme", užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Táto kapitola sa venuje úvodu do tejto metódy.
+\section{Regresná analýza}
+Pre pevné hodnoty nezávisle premennej $X$ (v našom prípade čas)  máme k dispozícií namerané hodnoty závisle premennej $Y$ (priepustnosť, použitá pamäť,...). Takýmito dvojicami bodov $(x_i, Y_i), i = 1,...,n$ chceme preložiť vhodnú krivku, tak aby boli odfiltrované výkyvy a bolo možné lepšie poznať štruktúru dát. Táto krivka sa nazýva \textit{regresná krivka} a jej príslušný regresný vzťah zapisujem v tvare
+
+\begin{equation}
+Y_i = m(x_i) + \varepsilon _i, i=1,...,n,
+\end{equation}

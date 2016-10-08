@@ -1,9 +1,30 @@
 \chapter{Jadrové odhady}
 
-Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy "vyhladíme", užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Táto kapitola sa venuje úvodu do tejto metódy.
+Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy "vyhladíme", užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Táto kapitola sa venuje úvodu do tejto metódy. Budú použité definície a pojmy zo zdroja 1 a 2.
 \section{Regresná analýza}
 Pre pevné hodnoty nezávisle premennej $X$ (v našom prípade čas)  máme k dispozícií namerané hodnoty závisle premennej $Y$ (priepustnosť, použitá pamäť,...). Takýmito dvojicami bodov $(x_i, Y_i), i = 1,...,n$ chceme preložiť vhodnú krivku, tak aby boli odfiltrované výkyvy a bolo možné lepšie poznať štruktúru dát. Táto krivka sa nazýva \textit{regresná krivka} a jej príslušný regresný vzťah zapisujem v tvare
 
 \begin{equation}
 Y_i = m(x_i) + \varepsilon _i, i=1,...,n,
 \end{equation}
+
+kde \textit{m} je neznáma regresná funkcia a $\varepsilon _i, i = 1,...,n$, sú chyby merania. Cieľom regresnej analýzy je nájsť vhodnú aproximáciu $\hat{m}$ neznámej funkcie $m$. Hľadanie tejto regresnej krivky sa tiež nazýva \textit{vyhladzovanie} a je možné použiť dva spôsoby odhadu, \textit{parametricky} a \textit{neparametricky}:
+\begin{itemize}
+\item \textit{Parametrický prístup} - predpokladá, že regresná funkcia je nejakého predpísaného tvaru. Odhadnutá regresná funkcia bude teda určitého tvaru a bude ju popisovať množina parametrov - to je dôvod pre názov \textit{parametrický}.
+\item \textit{Neparametrický prístup} - nepredpokladá predpísaný tvar regresnej funkcie. Tento prístup sa vyhýba parametrizácii a tvar funkcie sa odhaduje priamo z dát. Predpokladá sa jedine istá hladkosť hľadanej funkcie.
+\end{itemize}
+
+Jedna z najjednoduchších neparametrických metód je \textit{ metóda kĺzavých priemerov}. Pre odhad hodnoty $Y$ sa používa priemer niekoľkých hodnôt $Y$ v centrovanom okolí príslušného bodu $X$. \\*
+Konkrétne,
+ 
+\begin{equation}
+\hat{m}(x) = \dfrac{\sum\limits_{i=1}^{n}  Y_i I (x_i  \in  [x - h, x + h])}{\sum\limits_{i=1}^{n} I(x_i  \in  [x - h, x + h])}.
+\end{equation}
+Jadrové odhady sa považujú za zovšeobecnenie \textit{metódy kĺzavých priemerov}.
+
+
+ \section{Jadrové odhady}
+ Z definície probability density function , mozno radsej cez regresogram alebo histogram 
+ \subsection{Jadro}
+ 
+\subsection{Typy jadrových odhadov}

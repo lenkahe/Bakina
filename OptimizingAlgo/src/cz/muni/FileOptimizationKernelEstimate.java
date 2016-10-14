@@ -33,11 +33,11 @@ public class FileOptimizationKernelEstimate {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/Memory/kernelEstimationMemory30.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/Jadrove odhady/kernelEstimationMemory8.csv";
         try (FileWriter writer = new FileWriter(resultFile)) {
 
             KernelEstimator kernelEstimator = new KernelEstimator();
-            Map<Integer, Double> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 30.0);
+            Map<Integer, Double> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 8.0);
             int index = 0;
             for (Map.Entry<String, Double> entry : result.entrySet()) {
                 result.replace(entry.getKey(), estimatedValues.get(index));
@@ -48,6 +48,9 @@ public class FileOptimizationKernelEstimate {
                     writer.append(sb.toString());
                 }
                 index++;
+                if(index == 100){
+                    break;
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -30,13 +30,15 @@ Pre spustenie nástroja Perfcake je potrebné vytvoriť XML(eXtensible Markup La
 
 Validátory sa konfigurujú spolu s podobou správ, ktoré má nástroj odosielať na cieľový softvér. Takáto validácia sa rovnako ako scenáre, píše vo formáte XML.
 
+
 \begin{figure}[ht]
 \includegraphics[scale=1]{scenario.png}
-\caption{Scenár}
+\caption{Scenár}\label{scenario}
 \end{figure}
 
+
 Pre jednoduchú ukážku si uvedieme príklad. Máme vyvinutý softvér, ktorý asynchrónne spracováva správy prichádzajúce pomocou POST metódy a HTTP protokolu. Následne tieto správy spracúva (validuje, vytvára záznamy do databázy, generuje reporty, ...) a po úspešnom spracovaní pošle potvrdzujúcu správu späť.
-Na obrázku 1.2 sa nachádza scenár pre jednoduchý testovací blok, ktorý by sme mohli na takýto nami vytvorený softvér použiť. Zo scenára je možné vidieť, že tento test bude bežať 3000 ms = 3 sekundy, generuje správy použitím 100 vlákien, ktoré posiela pomocou HTTP protokolu a metódy POST. Text správy je špecifikovaný v súbore \uv{plain.txt} a výsledky sú zaznamenávané na konzolu, každú 1 sekundu. Ako reporter je použitý "IterationsPerSecondReporter" a teda sa každú sekndu zapíše koľko správ bolo softvérom za tú sekundu spracované. Scenáre sa púšťajú pomocou nástroja Maven alebo pomocou shell skriptu.
+Na obrázku \ref{scenario} sa nachádza scenár pre jednoduchý testovací blok, ktorý by sme mohli na takýto nami vytvorený softvér použiť. Zo scenára je možné vidieť, že tento test bude bežať 3000 ms = 3 sekundy, generuje správy použitím 100 vlákien, ktoré posiela pomocou HTTP protokolu a metódy POST. Text správy je špecifikovaný v súbore``plain.txt'' a výsledky sú zaznamenávané na konzolu, každú 1 sekundu. Ako reporter je použitý ``IterationsPerSecondReporter'' a teda sa každú sekndu zapíše koľko správ bolo softvérom za tú sekundu spracované. Veľmi podobným scenárom by sme mohli testovať, koľko softvér používa pamäte, stačilo by zmeniť atribút reporter na ``MemoryUsageReporter''. Týmto spôsobom sa veľmi ľahko odhaľujú úniky pamäte. Scenáre sa púšťajú pomocou nástroja Maven alebo pomocou shell skriptu.
 
 
 \section{Výstup}
@@ -73,20 +75,24 @@ Ako bolo uvedené v prvej podkapitole, Perfcake má viac možností východzích
 00:19:00      & 2,14             & 2,19             & 00:19:00      & 697,72        & 3043,13        \\ \hline
 00:20:00      & 2,05             & 2,17             & 00:20:00      & 844,43        & 3043,75        \\ \hline
 \end{tabular}
-\caption{Dáta}
+\caption{Dáta}\label{tab:Data}
 \end{table}
 
-Tabuľka 1.1 ukazuje dáta vygenerované nástrojom Perfcake za 20 minút, testovala sa priepustnosť softvéru a využitie pamäte. V praxi ale tie testy bežia aj niekoľko hodín a teda tabuľky môžu dosahovať tisíce záznamov. Ukladať a následne spracovať také množstvo dát je pamäťovo aj časovo náročné a preto budem hľadať algoritmus, ktorý zmenší objem dát a zároveň neznehodnotí informáciu z nich vyplývajúcu, pri vykreslení do grafov.
+Tabuľka  \ref{tab:Data} ukazuje dáta vygenerované nástrojom Perfcake za 20 minút, testovala sa priepustnosť softvéru a využitie pamäte. V praxi ale tie testy bežia aj niekoľko hodín a teda tabuľky môžu dosahovať tisíce záznamov. Ukladať a následne spracovať také množstvo dát je pamäťovo aj časovo náročné a preto budem hľadať algoritmus, ktorý zmenší objem dát a zároveň neznehodnotí informáciu z nich vyplývajúcu, pri vykreslení do grafov.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.70, angle =90]{graphs.png}
+\caption{Grafy}\label{grafy}
+\end{figure}
 
 \subsection{Grafy}
 
-\begin{figure}[!htb]
-\includegraphics[scale=0.75, angle =90]{graphs.png}
-\caption{Grafy}
-\end{figure}
+
 
 Pomocou grafu vieme často do mozgu preniesť oveľa viac informácií. 
-Na obrázku 1.3 sú znázornené grafy z testov, ktoré bežali 108 hodín a ktorých časť dát sme si ukázali v Tabuľke 1.1. Pre analýzu výsledku nie sú potrebné tak presné grafy, väčšinou je dôležitá hodnota okolo ktorej dáta v určitej časti grafu konvergujú, alebo či hodnoty veľmi "skáču". V bakalárskej práci budú tieto grafy porovnávané s grafmi, ktoré budú vykreslené z dát, na ktoré sa použije optimalizačný algoritmus.
+Na obrázku  \ref{grafy} sú znázornené grafy z testov, ktoré bežali 108 hodín a ktorých časť dát sme si ukázali v tabuľke  \ref{tab:Data}. Pre analýzu výsledku nie sú potrebné tak presné grafy, väčšinou je dôležitá hodnota okolo ktorej dáta v určitej časti grafu konvergujú, alebo či hodnoty veľmi ``skáču''. V bakalárskej práci budú tieto grafy porovnávané s grafmi, ktoré budú vykreslené z dát, na ktoré sa použije optimalizačný algoritmus.
+
 
 
 

@@ -1,6 +1,9 @@
-\chapter{Jadrové odhady}
+\chapter{Matematická teória}
 
-Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy "vyhladíme", užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Táto kapitola sa venuje úvodu do tejto metódy. Budú použité definície a pojmy zo zdroja 1 a 2.
+V tejto kapitole uvedieme potrebné znalosti z matematickej teórie, ktoré sú potrebné pre zostrojenie optimalizačných algoritmov, ktorými sa budeme zaoberať v následujúcich kapitolách. Budú použité definície a pojmy zo zdrojov ...
+%Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy %``vyhladíme'', užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa %rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Prvá časť tejto kapitoly sa venuje úvodu %do tejto metódy. Budú použité definície a pojmy zo zdroja 1 a 2. 
+
+%Po aplikovaní 
 \section{Regresná analýza}
 Pre pevné hodnoty nezávisle premennej $X$ (v našom prípade čas)  máme k dispozícií namerané hodnoty závisle premennej $Y$ (priepustnosť, použitá pamäť,...). Takýmito dvojicami bodov $(x_i, Y_i), i = 1,...,n$ chceme preložiť vhodnú krivku, tak aby boli odfiltrované výkyvy a bolo možné lepšie poznať štruktúru dát. Táto krivka sa nazýva \textit{regresná krivka} a jej príslušný regresný vzťah zapisujem v tvare
 
@@ -14,7 +17,7 @@ kde \textit{m} je neznáma regresná funkcia a $\varepsilon _i, i = 1,...,n$, s�
 \item \textit{Neparametrický prístup} - nepredpokladá predpísaný tvar regresnej funkcie. Tento prístup sa vyhýba parametrizácii a tvar funkcie sa odhaduje priamo z dát. Predpokladá sa jedine istá hladkosť hľadanej funkcie.
 \end{itemize}
 
-Jedna z najjednoduchších neparametrických metód je \textit{ metóda kĺzavých priemerov}. Pre odhad hodnoty $Y$ sa používa priemer niekoľkých hodnôt $Y$ v centrovanom okolí príslušného bodu $X$. \\*
+Jedna z najjednoduchších neparametrických metód je \textit{ metóda kĺzavých priemerov}. Pre odhad hodnoty $Y_i$ sa používa priemer niekoľkých hodnôt $Y_j,  j\in [i-h,i+h]$ v centrovanom okolí príslušného bodu $x_i$. \\*
 Konkrétne,
  
 \begin{equation}
@@ -23,8 +26,117 @@ Konkrétne,
 Jadrové odhady sa považujú za zovšeobecnenie \textit{metódy kĺzavých priemerov}.
 
 
- \section{Jadrové odhady}
- Z definície probability density function , mozno radsej cez regresogram alebo histogram 
- \subsection{Jadro}
+\section{Jadrové odhady}
+
+Pri odhadovaní regresnej funkcie pomocou jadrových odhadov, sa taktiež používajú vážené hodnoty $Y$ v centrovanom okolí príslušného bodu $x_i$. Váhy hodnôt $Y$ sú závislé na vzdialenosti príslušných $x$ bodov od konkrétneho $x_i$, bližšie hodnoty  -  väčšia váha. Toto nám pomáha dosiahnuť \textit{jadrová funkcia}. Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy je šírka vyhladzovacieho okna $h$.
+Vzorec pre jadrové odhady vo všeobecnosti, môžme zapísať nasledovne
+\begin{equation}
+\hat{m}(x,h) = \frac{1}{n}\sum\limits_{i=1}^{n} K_h(x)Y_i,
+\end{equation}
+kde $K_h(x)$ je váhová funkcia s vyhladzovacím parametrom \textit{h} a môže mať tvar
+\begin{equation}
+K_h(x - x_i) = \frac{1}{h}K\Big(\frac{x-x_i}{h}\Big),
+\end{equation}
+kde \textit{K} je jadrová funkcia.
+
+\subsection{Jadrová funkcia}
+\begin{figure}[!ht]
+\centering
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.15]{Epanecnikovo.pdf}
+  \caption{Epanečnikovo jadro}
+\end{subfigure}%
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.15]{quadratic.pdf}
+  \caption{Kvadratické jadro}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.15]{Gaussian.pdf}
+  \caption{Gaussovo jadro}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.15]{uniform.pdf}
+  \caption{Obdĺžnikové jadro}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.15]{triangular.pdf}
+  \caption{Trojuholníkové jadro}
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+  \centering
+  \includegraphics[scale=0.15]{smiesne.pdf}
+  \caption{Nepomenované jadro}
+\end{subfigure}
+\centering
+\caption{Rôzne tvary jadrových funkcií:}\label{kernelShapeTypes}
+\begin{tabular}{ l l l }
+ a) $K(x)=\frac{3}{4}(1-x^2)I_{[-1,1]}$, & b) $K(x)=\frac{15}{16}(1-x^2)^2I_{[-1,1]}$, & c) $K(x)=\frac{1}{\sqrt{2\pi}}e^-\frac{x^2}{2} $, \\
+ d) $K(x)=\frac{1}{2}I_{[-1,1]} $, & e) $K(x)=(1-|x|)I_{[-1,1]}$, & f) $K(x)=\frac{1}{2}e^{-|x|}$
+ \end{tabular}
+ 
+\end{figure}
+
+Jadrová funkcia determinuje tvar vyhladzovacej funkcie. Na obrázku \ref{kernelShapeTypes} môžme vidieť niekoľko najpoužívanejších jadrových funkcií. Na vyjadrenie 
+\begin{equation}
+I_{[-1,1]}(x) \begin{cases}
+1 & x \in [-1,1], \\ 
+0 & $inak.$
+\end{cases}
+\end{equation}
+sa používa \textit{indikátorová funkcia} $I_{[-1,1]}(x)$.
+
+Vo všeobecnosti hocijaká integrovatelná, obmedzená funkcia, ktorá spĺňa kritériá \ref{criterion} môže byť jadrom.
+\begin{align}\label{criterion}
+\begin{split}
+a) \int K(z)dz = 1 \qquad & b) \int zK(z)dz = 0 \\ 
+c) \int z^2K(z)dz < \infty \qquad & d) K(x) \geq 0 \enspace \textrm{pre všetky} \enspace x.
+\end{split}
+\end{align} 
+
+\subsection{Šírka vyhladzovacieho okna}
+
+Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
+
+Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí bodu $x_i$ a teda odhad do veľkej miery reprodukuje pôvodné dáta. Naopak ak zvolíme vysokú hodnota $h$, aj veľmi vzdialené hodnoty majú vysoký dopad na odhad, čo vedie k ``prehladeniu'' a pri dostatočne veľkej šírke $h$ až k priemeru dát. Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použite Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole. 
+ 
+ \begin{figure}[!ht]
+  \includegraphics[scale=0.25]{kernelEstimationMemory005.pdf}
+  \includegraphics[scale=0.25]{kernelEstimationMemory8.pdf}
+  \centering
+  \includegraphics[scale=0.25]{kernelEstimationMemory2.pdf}
+  \caption{Porovnanie šírky vyhladzovacieho okna, bodky sú pôvodné dáta, súvislá čiara odhadnutá regresná funkcia}\label{porovnanieSirky}
+\end{figure}
  
 \subsection{Typy jadrových odhadov}
+V tejto podkapitole si uvedieme konkrétne typy jadrových odhadov, ktoré sú uvedené v zdrojoch ...
+
+Medzi najznámejšie jadrové odhady patria:
+
+\begin{itemize}
+\item  \textbf{Nadaraya-Watsonove odhady}
+
+\begin{equation*}
+\hat{m}_{MW}(x;h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)},
+\end{equation*}
+
+\item
+\textbf{Gasser-Müllerove odhady}
+\begin{equation*}
+\hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
+\end{equation*}
+
+kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$.
+
+\item
+ \textbf{Priestley-Chaove odhady}
+\begin{equation*}
+\hat{m}_{PCH}(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}K_h(x-x_i)Y_i
+\end{equation*}
+\end{itemize}
+
+Pre odhad regresnej funkcie je možné použiť rovnako odhady $\hat{m}_{NW}, \hat{m}_{} $ 

@@ -102,7 +102,9 @@ c) \int z^2K(z)dz < \infty \qquad & d) K(x) \geq 0 \enspace \textrm{pre všetky}
 
 Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
 
-Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí bodu $x_i$ a teda odhad do veľkej miery reprodukuje pôvodné dáta. Naopak ak zvolíme vysokú hodnota $h$, aj veľmi vzdialené hodnoty majú vysoký dopad na odhad, čo vedie k ``prehladeniu'' a pri dostatočne veľkej šírke $h$ až k priemeru dát. Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použite Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole. 
+Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí bodu $x_i$ a teda odhad do veľkej miery reprodukuje pôvodné dáta. Naopak, ak zvolíme vysokú hodnotu $h$, aj veľmi vzdialené hodnoty majú vysoký dopad na odhad, čo vedie k ``prehladeniu'' a pri dostatočne veľkej šírke $h$ až k priemeru dát.
+
+ Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použité reaálne dáta meranie použitej pamäte nástroja Perfcake. Aplikované sú Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole, s Gaussovou jadrovou funkciou. 
  
  \begin{figure}[!ht]
   \includegraphics[scale=0.25]{kernelEstimationMemory005.pdf}
@@ -125,6 +127,16 @@ Medzi najznámejšie jadrové odhady patria:
 \end{equation*}
 
 \item
+ \textbf{Lokálne lineárne estimátory}
+\begin{equation*}
+\hat{m}_{LL}(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}\frac{{\hat{s}_2(x;h) - \hat{s}_1(x;h)(x_i - x)}K_h(x-x_i)Y_i}{\hat{s}_2(x;h)\hat{s}_0(x;h) - \hat{s}_1(x;h)^2},
+\end{equation*}
+kde 
+\begin{equation*}
+\hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i)
+\end{equation*}
+
+\item
 \textbf{Gasser-Müllerove odhady}
 \begin{equation*}
 \hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
@@ -132,11 +144,47 @@ Medzi najznámejšie jadrové odhady patria:
 
 kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$.
 
-\item
- \textbf{Priestley-Chaove odhady}
-\begin{equation*}
-\hat{m}_{PCH}(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}K_h(x-x_i)Y_i
-\end{equation*}
 \end{itemize}
 
-Pre odhad regresnej funkcie je možné použiť rovnako odhady $\hat{m}_{NW}, \hat{m}_{} $ 
+Pre regresný model s náhodným plánom je možné rovnako použiť odhady $\hat{m}_{NM}(x;h)$ a $\hat{m}_{LL}(x;h)$. Odhad $ \hat{m}_{GM}(x;h)$ je menej vhodný, pretože v tomto prípade je rozptyl odhadu väčší ako pri odhadoch $\hat{m}_{NM}(x;h)$ a $\hat{m}_{LL}(x;h)$.
+
+\section{Miera polohy a miera variability}
+
+Majme \textit{súbor hodnôt}
+ \begin{equation}
+x_1,x_2,x_3,...,x_n,
+\end{equation}  
+kde \textit{n} je rozsah súboru a jeho hodnoty sú intervalového alebo pomerového typu. To znamená, že je možné  stanoviť vzdialenosti medzi meranými hodnotami, a teda počítať s ich rozdielami. Tento súbor hodnôt môžme analyzovať niekoľkými spôsobmi.
+
+\subsection{Aritmetický priemer}
+Ak na určenie hodnoty, okolo ktorej sa hodnoty jednotlivých pozorovaní nachádzajú je vhodný aritmetický priemer daného súboru. 
+
+\begin{equation}
+\bar{x} = \frac{1}{n} \sum\limits_{i=1}^{n} x_i
+\end{equation}
+
+Aritmetický priemer je tiež nazývaný miera polohy štatistických znakov.
+
+\subsection{Rozptyl a smerodajná odchýlka}
+
+Miery variability určujú, spôsob akým sú merané hodnoty usporiadané okolo strednej hodnoty. Najpoužívanejšie miery variability sú rozptyl a smerodajná odchýlka.
+
+Rozptyl je  často označovaný ako \textit{stredná kvadratická odchýlka} a je definovaný
+\begin{equation}
+s^2 = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - \bar{x})^2.
+\end{equation}
+
+V prípade, že rozptyl počítame iba zo vzorky hodnôt, a nie z celého súboru hodnôt, vzorec sa zmení na
+ \begin{equation}
+s^2 = \frac{1}{n-1}\sum\limits_{i=1}^{n}(x_i - \bar{x})^2,
+\end{equation}
+vďaka tejto úprave bude rozptyl jemne väčší. Táto korektúra sa používa na zmiernenie zkreslenia výsledku pri výpočte zo zmenšeného počtu dát.
+
+Smerodajná odchýlka je daná ako odmocnina z rozptylu
+\begin{equation}
+s = \sqrt{s^2}.
+\end{equation}
+
+Čím väčšie hodnoty rozptyl a smerodajná odchýlka naberajú, tým viac sú hodnoty rozptýlené od priemeru, naopak menšie hodnoty indikujú ``tesnejšie'' usporiadanie meraných hodnôt.
+
+

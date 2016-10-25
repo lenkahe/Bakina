@@ -11,7 +11,7 @@ import static java.lang.Math.abs;
 public class FileOptimization {
 
     public static void main(String[] args) {
-        String csvFile = "/Users/User/Documents/Skola/Bakina/Memory/kernelEstimationMemory30.csv";
+        String csvFile = "/Users/User/Documents/Skola/Bakina/Throughput/kernelEstimation30.csv";
         String line;
         String cvsSplitBy = ";";
         int windowCounter = 0;
@@ -76,11 +76,11 @@ public class FileOptimization {
                 }
                 variance =sum /(window.size()-1);
                 Double standartDeviation = Math.sqrt(variance);
-                if (Math.abs(average - nextValue) > standartDeviation + 20){
-                ///if(Math.abs(Math.sqrt(variance) - Math.sqrt(varianceBefore)) > 5){
-                //if(abs(average - nextValue) > 50){
-                    //result.put(lastTime, window.get(windowCounter != 0 ? windowCounter - 1 : 9));
-                    result.put(values[0], nextValue);
+                //if (Math.abs(average - nextValue) > standartDeviation){
+                //if(Math.abs(Math.sqrt(variance) - Math.sqrt(varianceBefore)) > 0.01){
+                if(abs(average - nextValue) > 0.15){
+                    result.put(lastTime, window.get(windowCounter != 0 ? windowCounter - 1 : 9));
+                    result.put(average.toString(), nextValue);
                 } else{
                     result.put(values[0], 0d);
                 }
@@ -96,7 +96,7 @@ public class FileOptimization {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/Memory/reducedFile.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/reducedFile1.csv";
 
         Integer valueCounter = 0;
         try (FileWriter writer = new FileWriter(resultFile)) {

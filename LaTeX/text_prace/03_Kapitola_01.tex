@@ -26,7 +26,7 @@ Jeden z problémov podobných testovacích nástrojov je prípad, kedy testovan�
 
 \section{Použitie}
 
-Pre spustenie nástroja Perfcake je potrebné vytvoriť XML(eXtensible Markup Language) súbory, takzvané scenáre (scenarios). V týchto súboroch sú definované testovacie bloky, ktoré obsahujú cieľový softvér, typ zaťaženia, typ výstupu, typ protokolu, dobu trvania\dots
+Pre spustenie nástroja Perfcake je potrebné vytvoriť XML (eXtensible Markup Language) súbory, takzvané scenáre (scenarios). V týchto súboroch sú definované testovacie bloky, ktoré obsahujú cieľový softvér, typ zaťaženia, typ výstupu, typ protokolu, dobu trvania\dots
 
 Validátory sa konfigurujú spolu s podobou správ, ktoré má nástroj odosielať na cieľový softvér. Takáto validácia sa rovnako ako scenáre, píše vo formáte XML.
 
@@ -38,7 +38,7 @@ Validátory sa konfigurujú spolu s podobou správ, ktoré má nástroj odosiela
 
 
 Pre jednoduchú ukážku si uvedieme príklad. Máme vyvinutý softvér, ktorý asynchrónne spracováva správy prichádzajúce pomocou POST metódy a HTTP protokolu. Následne tieto správy spracúva (validuje, vytvára záznamy do databázy, generuje reporty, ...) a po úspešnom spracovaní pošle potvrdzujúcu správu späť.
-Na obrázku \ref{scenario} sa nachádza scenár pre jednoduchý testovací blok, ktorý by sme mohli na takýto nami vytvorený softvér použiť. Zo scenára je možné vidieť, že tento test bude bežať 3000 ms = 3 sekundy, generuje správy použitím 100 vlákien, ktoré posiela pomocou HTTP protokolu a metódy POST. Text správy je špecifikovaný v súbore``plain.txt'' a výsledky sú zaznamenávané na konzolu, každú 1 sekundu. Ako reporter je použitý ``IterationsPerSecondReporter'' a teda sa každú sekndu zapíše koľko správ bolo softvérom za tú sekundu spracované. Veľmi podobným scenárom by sme mohli testovať, koľko softvér používa pamäte, stačilo by zmeniť atribút reporter na ``MemoryUsageReporter''. Týmto spôsobom sa veľmi ľahko odhaľujú úniky pamäte. Scenáre sa púšťajú pomocou nástroja Maven alebo pomocou shell skriptu.
+Na obrázku \ref{scenario} sa nachádza scenár pre jednoduchý testovací blok, ktorý by sme mohli na takýto nami vytvorený softvér použiť. Zo scenára je možné vidieť, že tento test bude bežať 3000 ms = 3 sekundy, generuje správy použitím 100 vlákien, ktoré posiela pomocou HTTP protokolu a metódy POST. Text správy je špecifikovaný v súbore``plain.txt'' a výsledky sú zaznamenávané na konzolu, každú 1 sekundu. Ako reporter je použitý ``IterationsPerSecondReporter'' a teda sa každú sekundu zapíše, koľko správ bolo softvérom spracovaných. Veľmi podobným scenárom by sme mohli testovať, koľko softvér používa pamäte, stačilo by zmeniť atribút reporter na ``MemoryUsageReporter''. Týmto spôsobom sa veľmi ľahko odhaľujú úniky pamäte. Scenáre sa púšťajú pomocou nástroja Maven alebo pomocou shell skriptu.
 
 
 \section{Výstup}
@@ -78,20 +78,25 @@ Ako bolo uvedené v prvej podkapitole, Perfcake má viac možností východzích
 \caption{Dáta}\label{tab:Data}
 \end{table}
 
-Tabuľka  \ref{tab:Data} ukazuje dáta vygenerované nástrojom Perfcake za 20 minút, testovala sa priepustnosť softvéru a využitie pamäte. V praxi ale tie testy bežia aj niekoľko hodín a teda tabuľky môžu dosahovať tisíce záznamov. Ukladať a následne spracovať také množstvo dát je pamäťovo aj časovo náročné a preto budem hľadať algoritmus, ktorý zmenší objem dát a zároveň neznehodnotí informáciu z nich vyplývajúcu, pri vykreslení do grafov.
+Tabuľka  \ref{tab:Data} ukazuje dáta vygenerované nástrojom Perfcake za 20 minút, testovala sa priepustnosť softvéru v iteráciách za sekundu a využitie pamäte v megabajtoch. Pri priepustnosti sa počíta priemer za časovú jednotku (current) a tiež priemer za niekoľko časových jednotiek (average), časová jednotka a veľkosť okna, s ktorými sa bude počíta sa 
+dá nastaviť v scenári, pri dátach s tabuľky je to minúta a 15 záznamov. Priemer sa začína počítať, keď sa naplní okno a potom už pre každý ďalší záznam. 
 
-\begin{figure}[!ht]
+\begin{figure}[!htb]
 \centering
 \includegraphics[scale=0.70, angle =90]{graphs.png}
 \caption{Grafy}\label{grafy}
 \end{figure}
 
+
+Pri testovaní využívania pamäte sa zaznamenáva použitá (used) a celková pamäť (total). Celková pamäť, je pamäť, ktorú si  JVM alokuje a použitá pamäť je pamäť, ktorú naozaj využije - celková mínus voľná pamäť. Viac o pamäti v JVM sa čitateľ dozvie v oficiálnej dokumentácií(http://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html).
+
+V popisovanej tabuľke sú dáta zaznamenané za 20 min, v praxi ale tie testy bežia väčšinou niekoľko desiatok hodín a teda tabuľky môžu dosahovať tisíce záznamov. Ukladať a následne spracovať takéto množstvo dát je pamäťovo aj časovo náročné a preto budem hľadať algoritmus, ktorý zmenší objem dát a zároveň neznehodnotí informáciu z nich vyplývajúcu, pri vykreslení do grafov.
+
+
 \subsection{Grafy}
 
-
-
 Pomocou grafu vieme často do mozgu preniesť oveľa viac informácií. 
-Na obrázku  \ref{grafy} sú znázornené grafy z testov, ktoré bežali 108 hodín a ktorých časť dát sme si ukázali v tabuľke  \ref{tab:Data}. Pre analýzu výsledku nie sú potrebné tak presné grafy, väčšinou je dôležitá hodnota okolo ktorej dáta v určitej časti grafu konvergujú, alebo či hodnoty veľmi ``skáču''. V bakalárskej práci budú tieto grafy porovnávané s grafmi, ktoré budú vykreslené z dát, na ktoré sa použije optimalizačný algoritmus.
+Na obrázku  \ref{grafy} sú znázornené grafy z testov, ktoré bežali 108 hodín, a ktorých prvých 20 záznamov sme si ukázali v tabuľke  \ref{tab:Data}. Pre analýzu výsledku nie sú potrebné tak presné grafy, väčšinou je dôležitá hodnota okolo ktorej dáta v určitej časti grafu konvergujú, alebo či hodnoty veľmi ``skáču''. V bakalárskej práci budú tieto grafy upravené a následne porovnávané s grafmi, ktoré budú vykreslené z dát, na ktoré sa použije optimalizačný algoritmus.
 
 
 

@@ -14,7 +14,7 @@ public class KernelEstimator {
         List<Map.Entry<Integer, Double>> subMap;
         List<Map.Entry<Integer, Double>> entryList = new ArrayList<>(timeSeries.entrySet());
         int counter = 0;
-        //while (counter < timeSeries.size()) {
+        while (counter < timeSeries.size()) {
 
             subMap = entryList.subList(counter, counter + 100 < timeSeries.size() ? counter + 100 : timeSeries.size());
 
@@ -37,7 +37,7 @@ public class KernelEstimator {
 
             //counter = counter + 50;
             counter = counter + 20;
-        //}
+        }
         return result;
     }
 }

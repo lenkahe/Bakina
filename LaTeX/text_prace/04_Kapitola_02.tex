@@ -1,6 +1,7 @@
 \chapter{Matematická teória}
 
-V tejto kapitole uvedieme potrebné znalosti z matematickej teórie, ktoré sú potrebné pre zostrojenie optimalizačných algoritmov, ktorými sa budeme zaoberať v následujúcich kapitolách. Budú použité definície a pojmy zo zdrojov ...
+V tejto kapitole uvedieme potrebné znalosti z matematickej teórie, ktoré sú potrebné pre zostrojenie optimalizačných algoritmov, ktorými sa budeme zaoberať v následujúcich kapitolách.Najprv sa oboznámime s úvodom do regresnej analýzy a s neparametrickou metódou odhadu regresnej funkcie - metódou jadrových odhadov,ktorú použijeme na vyhladenie dát. Na konci kapitoly si ešte uvedieme vzorce pre aritmetický priemer, rozptyl a smerodajnú odchýlku, budú použité na redukciu dát. Pojmy a definície sú prebraté zo zdrojov...
+
 %Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy %``vyhladíme'', užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa %rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Prvá časť tejto kapitoly sa venuje úvodu %do tejto metódy. Budú použité definície a pojmy zo zdroja 1 a 2. 
 
 %Po aplikovaní 
@@ -20,20 +21,29 @@ kde \textit{m} je neznáma regresná funkcia a $\varepsilon _i, i = 1,...,n$, s�
 Jedna z najjednoduchších neparametrických metód je \textit{ metóda kĺzavých priemerov}. Pre odhad hodnoty $Y_i$ sa používa priemer niekoľkých hodnôt $Y_j,  j\in [i-h,i+h]$ v centrovanom okolí príslušného bodu $x_i$. \\*
 Konkrétne,
  
-\begin{equation}
-\hat{m}(x) = \dfrac{\sum\limits_{i=1}^{n}  Y_i I (x_i  \in  [x - h, x + h])}{\sum\limits_{i=1}^{n} I(x_i  \in  [x - h, x + h])}.
+\begin{equation}\label{metodaVazenychPriemerov}
+\hat{m}(x) = \dfrac{\sum\limits_{i=1}^{n}  Y_i I_{[x - h, x + h]}(x_i)}{\sum\limits_{i=1}^{n} I_{[x - h, x + h]}(x_i)}.
 \end{equation}
+Na vyjadrenie 
+\begin{equation}\label{indikatorovaFunkcia}
+I_{[j,k]}(x) \begin{cases}
+1 & x \in [j,k], \\ 
+0 & $inak.$
+\end{cases}
+\end{equation}
+sa používa \textit{indikátorová funkcia} $I_{[j,k]}(x)$.
+
 Jadrové odhady sa považujú za zovšeobecnenie \textit{metódy kĺzavých priemerov}.
 
 
 \section{Jadrové odhady}
 
-Pri odhadovaní regresnej funkcie pomocou jadrových odhadov, sa taktiež používajú vážené hodnoty $Y$ v centrovanom okolí príslušného bodu $x_i$. Váhy hodnôt $Y$ sú závislé na vzdialenosti príslušných $x$ bodov od konkrétneho $x_i$, bližšie hodnoty  -  väčšia váha. Toto nám pomáha dosiahnuť \textit{jadrová funkcia}. Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy je šírka vyhladzovacieho okna $h$.
+Pri odhadovaní regresnej funkcie pomocou jadrových odhadov, sa taktiež používajú vážené hodnoty $Y$ v centrovanom okolí príslušného bodu $x_i$. Váhy hodnôt $Y$ sú závislé na vzdialenosti príslušných $x$ bodov od konkrétneho $x_i$, bližšie hodnoty  -  väčšia váha. Toto nám pomáha dosiahnuť \textit{jadrová funkcia}. 
 Vzorec pre jadrové odhady vo všeobecnosti, môžme zapísať nasledovne
 \begin{equation}
-\hat{m}(x,h) = \frac{1}{n}\sum\limits_{i=1}^{n} K_h(x)Y_i,
+\hat{m}(x,h) = \sum\limits_{i=1}^{n} W_i(x,h)Y_i,
 \end{equation}
-kde $K_h(x)$ je váhová funkcia s vyhladzovacím parametrom \textit{h} a môže mať tvar
+kde $ W_i(x,h)$ je váhová funkcia s vyhladzovacím parametrom \textit{h}. Ide teda o akýsi vážený súčet pozorovaní, ktorý v prípade, že použijeme metódu vážených štvorcov môže mať tvar
 \begin{equation}
 K_h(x - x_i) = \frac{1}{h}K\Big(\frac{x-x_i}{h}\Big),
 \end{equation}
@@ -75,20 +85,13 @@ kde \textit{K} je jadrová funkcia.
 \centering
 \caption{Rôzne tvary jadrových funkcií:}\label{kernelShapeTypes}
 \begin{tabular}{ l l l }
- a) $K(x)=\frac{3}{4}(1-x^2)I_{[-1,1]}$, & b) $K(x)=\frac{15}{16}(1-x^2)^2I_{[-1,1]}$, & c) $K(x)=\frac{1}{\sqrt{2\pi}}e^-\frac{x^2}{2} $, \\
- d) $K(x)=\frac{1}{2}I_{[-1,1]} $, & e) $K(x)=(1-|x|)I_{[-1,1]}$, & f) $K(x)=\frac{1}{2}e^{-|x|}$
+ a) $K(x)=\frac{3}{4}(1-x^2)I_{[-1,1]}(x)$, & b) $K(x)=\frac{15}{16}(1-x^2)^2I_{[-1,1]}(x)$, & c) $K(x)=\frac{1}{\sqrt{2\pi}}e^-\frac{x^2}{2} $, \\
+ d) $K(x)=\frac{1}{2}I_{[-1,1]}(x) $, & e) $K(x)=(1-|x|)I_{[-1,1]}(x)$, & f) $K(x)=\frac{1}{2}e^{-|x|}$
  \end{tabular}
  
 \end{figure}
 
-Jadrová funkcia determinuje tvar vyhladzovacej funkcie. Na obrázku \ref{kernelShapeTypes} môžme vidieť niekoľko najpoužívanejších jadrových funkcií. Na vyjadrenie 
-\begin{equation}
-I_{[-1,1]}(x) \begin{cases}
-1 & x \in [-1,1], \\ 
-0 & $inak.$
-\end{cases}
-\end{equation}
-sa používa \textit{indikátorová funkcia} $I_{[-1,1]}(x)$.
+Jadrová funkcia determinuje tvar vyhladzovacej funkcie. Na obrázku \ref{kernelShapeTypes} môžme vidieť niekoľko najpoužívanejších jadrových funkcií. V popise funkcie sa používa indikátorová funkcia (\ref{indikatorovaFunkcia}).
 
 Vo všeobecnosti hocijaká integrovatelná, obmedzená funkcia, ktorá spĺňa kritériá \ref{criterion} môže byť jadrom.
 \begin{align}\label{criterion}
@@ -100,7 +103,7 @@ c) \int z^2K(z)dz < \infty \qquad & d) K(x) \geq 0 \enspace \textrm{pre všetky}
 
 \subsection{Šírka vyhladzovacieho okna}
 
-Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
+Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy je šírka vyhladzovacieho okna $h$.Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
 
 Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí bodu $x_i$ a teda odhad do veľkej miery reprodukuje pôvodné dáta. Naopak, ak zvolíme vysokú hodnotu $h$, aj veľmi vzdialené hodnoty majú vysoký dopad na odhad, čo vedie k ``prehladeniu'' a pri dostatočne veľkej šírke $h$ až k priemeru dát.
 
@@ -110,10 +113,46 @@ Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí
   \includegraphics[scale=0.25]{kernelEstimationMemory005.pdf}
   \includegraphics[scale=0.25]{kernelEstimationMemory8.pdf}
   \centering
-  \includegraphics[scale=0.25]{kernelEstimationMemory2.pdf}
+  \includegraphics[scale=0.27]{kernelEstimationMemory2.pdf}
   \caption{Porovnanie šírky vyhladzovacieho okna, bodky sú pôvodné dáta, súvislá čiara odhadnutá regresná funkcia}\label{porovnanieSirky}
 \end{figure}
+
+\subsection{Vhodný výber vyhladzovacieho parametra}
+Hoci je v praxi bežné vybrať vhodnú šírku vyhladzovacieho okna na základe niekoľkých pokusov a následného subjektívneho výberu, existuje niekoľko metód pre výber optimálnej šírky vyhladzovacieho okna.
+
+Kvalita jadrových odhadov regresnej funkcie môže byť lokálne popísaná pomocou \textit{strednej kvadratickej chyby (MSE - Mean Square Error)}
+\begin{equation*}
+MSE\{\hat{m}(x,h)\} = E{\{\hat{m}(x,h) - m(x)\}}^2.
+\end{equation*} 
+\\
+Alebo tiež pomocou globálnej chyby - \textit{priemernej strednej kvadratickej chyby (AMSE - average MSE)}
+\begin{equation*}
+AMSE\{\hat{m}(.,h)\} = \frac{1}{n}E\sum\limits_{i=1}^{n} {\{\hat{m}(x_i,h) - m(x_i)\}}^2.
+\end{equation*}
+Minimalizovaním týchto chýb pre hodnotu parametra $h$, dostávame jeho optimum.
+
+Keďže vzorec pre AMSE obsahuje neznáme hodnoty regresnej funkcie, použijeme pre výpočet optimálnej hodnoty parametra $h$, \textit{reziduálny súčet štvorcov (RSS)}, kde tieto neznáme hodnoty nahradíme nameranými hodnotami $Y_i$.
+Teda
+\begin{equation}
+ RSS_n(h) = \frac{1}{n}\sum\limits_{i=1}^{n} {\{Y_i - m(x_i,h)\}}^2.
+\end{equation}
+ RSS ale nie je nestranným odhadom AMSE, preto sa metódy pre odhad optimálnej šírky vyhladzovacieho okna snažia RSS upraviť tak, aby bol nestranný. 
  
+ Jedna z najpoužívanejších metód tohto typu je \textit{metóda krížového overenia (Cross-validation method)}. Táto metóda spočíva vo vynechaní pozorovania $x_j$ pre spočítanie odhadu v bode $x_j$
+ \begin{equation*}
+\hat{m}_{-j}(x_j,h) = \sum\limits_{\substack{i=1 \\ i\neq j}}^{n}W_i(x_j,h)Y_i.
+\end{equation*}
+S použitím tejto modifikácie, môžme RSS prepísať do tvaru
+\begin{equation}\label{CV}
+CV(h) = \frac{1}{n}\sum\limits_{i=1}^{n} {\{Y_i - m_{-i}(x_i)\}}^2,
+\end{equation}
+funkcia CV je tiež známa ako ``cross-validačná'' funkcia. Odhadnuté optimálne $h$ dostaneme minimalizovaním (\ref{CV})
+\begin{equation}
+\hat{h}_{CV} = \underset{h \in H_n}{\textrm{ arg min }} CV(h).
+\end{equation}
+Aj keď je táto metóda jedna z najpoužívanejších, negarantuje nestrannosť odhadu, ani že $\hat{h}_{CV}$ minimalizuje AMSE (alebo hocijakú inú chybovú mieru). Dôsledkom toho je, že $\hat{h}_{CV}$  nadobúda väčšinou jemne nižšiu hodnotu ako je optimálna šírka $h$.
+
+Viac o metóde krížového overenia, ale aj iných metódach na odhad optimálnej šírky vyhladzovacieho okna, napr. Malloowsova metóda, Penalizačná metóda, alebo metóda založená na Fourierovej transformácii, môžme nájsť v [(Kernel smoothing)].
 \subsection{Typy jadrových odhadov}
 V tejto podkapitole si uvedieme konkrétne typy jadrových odhadov, ktoré sú uvedené v zdrojoch ...
 
@@ -125,6 +164,7 @@ Medzi najznámejšie jadrové odhady patria:
 \begin{equation*}
 \hat{m}_{MW}(x;h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)},
 \end{equation*}
+tento estimátor zabezpečuje, aby súčet váh bol 1. Je to prípad, kedy preložíme dáta konštantnou funkciou. Môžme si tiež všimnúť, že ak použijeme Nadaraya-Watsonove odhady s obdĺžnikovou jadrovou funkciou, dostaneme metódu kĺzavých priemerov (\ref{metodaVazenychPriemerov}).
 
 \item
  \textbf{Lokálne lineárne estimátory}
@@ -133,8 +173,9 @@ Medzi najznámejšie jadrové odhady patria:
 \end{equation*}
 kde 
 \begin{equation*}
-\hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i)
+\hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i),
 \end{equation*}
+ako vyplýva z názvu, v prípade týchto estimátorov prekladáme dáta priamkou (lineárnou funkciou).
 
 \item
 \textbf{Gasser-Müllerove odhady}
@@ -142,13 +183,13 @@ kde
 \hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
 \end{equation*}
 
-kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$.
+kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$, pre $x_i$ ekvidištantne rozdelené na [0,1]. Tento estimátor sa dá vhodne použiť pre odhad derivácie regresnej funkcie.
 
 \end{itemize}
 
-Pre regresný model s náhodným plánom je možné rovnako použiť odhady $\hat{m}_{NM}(x;h)$ a $\hat{m}_{LL}(x;h)$. Odhad $ \hat{m}_{GM}(x;h)$ je menej vhodný, pretože v tomto prípade je rozptyl odhadu väčší ako pri odhadoch $\hat{m}_{NM}(x;h)$ a $\hat{m}_{LL}(x;h)$.
 
 \section{Miera polohy a miera variability}
+Ako bolo uvedené na začiatku kapitoly, v tejto podkapitole sa oboznámime ešte s niektorými pojmami zo štatistiky.
 
 Majme \textit{súbor hodnôt}
  \begin{equation}
@@ -157,7 +198,7 @@ x_1,x_2,x_3,...,x_n,
 kde \textit{n} je rozsah súboru a jeho hodnoty sú intervalového alebo pomerového typu. To znamená, že je možné  stanoviť vzdialenosti medzi meranými hodnotami, a teda počítať s ich rozdielami. Tento súbor hodnôt môžme analyzovať niekoľkými spôsobmi.
 
 \subsection{Aritmetický priemer}
-Ak na určenie hodnoty, okolo ktorej sa hodnoty jednotlivých pozorovaní nachádzajú je vhodný aritmetický priemer daného súboru. 
+Na určenie hodnoty, okolo ktorej sa hodnoty jednotlivých pozorovaní nachádzajú je vhodný aritmetický priemer daného súboru. 
 
 \begin{equation}
 \bar{x} = \frac{1}{n} \sum\limits_{i=1}^{n} x_i

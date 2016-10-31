@@ -36,7 +36,7 @@ public class KernelEstimator {
             }
 
             //counter = counter + 50;
-            counter = counter + 20;
+            counter = counter + 30;
         }
         return result;
     }

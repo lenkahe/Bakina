@@ -33,11 +33,11 @@ public class FileOptimizationKernelEstimate {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/kernelEstimation30.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/kernelEstimation50-prelin.csv";
         try (FileWriter writer = new FileWriter(resultFile)) {
 
             KernelEstimator kernelEstimator = new KernelEstimator();
-            Map<Integer, Double> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 30.0);
+            Map<Integer, Double> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 50.0);
             int index = 0;
             for (Map.Entry<String, Double> entry : result.entrySet()) {
                 result.replace(entry.getKey(), estimatedValues.get(index));

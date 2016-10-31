@@ -36,7 +36,7 @@ sa používa \textit{indikátorová funkcia} $I_{[j,k]}(x)$.
 Jadrové odhady sa považujú za zovšeobecnenie \textit{metódy kĺzavých priemerov}.
 
 
-\section{Jadrové odhady}
+\section{Jadrové odhady}\label{JadroveOdhady}
 
 Pri odhadovaní regresnej funkcie pomocou jadrových odhadov, sa taktiež používajú vážené hodnoty $Y$ v centrovanom okolí príslušného bodu $x_i$. Váhy hodnôt $Y$ sú závislé na vzdialenosti príslušných $x$ bodov od konkrétneho $x_i$, bližšie hodnoty  -  väčšia váha. Toto nám pomáha dosiahnuť \textit{jadrová funkcia}. 
 Vzorec pre jadrové odhady vo všeobecnosti, môžme zapísať nasledovne
@@ -44,7 +44,7 @@ Vzorec pre jadrové odhady vo všeobecnosti, môžme zapísať nasledovne
 \hat{m}(x,h) = \sum\limits_{i=1}^{n} W_i(x,h)Y_i,
 \end{equation}
 kde $ W_i(x,h)$ je váhová funkcia s vyhladzovacím parametrom \textit{h}. Ide teda o akýsi vážený súčet pozorovaní, ktorý v prípade, že použijeme metódu vážených štvorcov môže mať tvar
-\begin{equation}
+\begin{equation}\label{metodaVazStvorcov}
 K_h(x - x_i) = \frac{1}{h}K\Big(\frac{x-x_i}{h}\Big),
 \end{equation}
 kde \textit{K} je jadrová funkcia.
@@ -161,27 +161,27 @@ Medzi najznámejšie jadrové odhady patria:
 \begin{itemize}
 \item  \textbf{Nadaraya-Watsonove odhady}
 
-\begin{equation*}
+\begin{equation}\label{Nadaraya-Watson}
 \hat{m}_{MW}(x;h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)},
-\end{equation*}
+\end{equation}
 tento estimátor zabezpečuje, aby súčet váh bol 1. Je to prípad, kedy preložíme dáta konštantnou funkciou. Môžme si tiež všimnúť, že ak použijeme Nadaraya-Watsonove odhady s obdĺžnikovou jadrovou funkciou, dostaneme metódu kĺzavých priemerov (\ref{metodaVazenychPriemerov}).
 
 \item
  \textbf{Lokálne lineárne estimátory}
-\begin{equation*}
+\begin{equation}
 \hat{m}_{LL}(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}\frac{{\hat{s}_2(x;h) - \hat{s}_1(x;h)(x_i - x)}K_h(x-x_i)Y_i}{\hat{s}_2(x;h)\hat{s}_0(x;h) - \hat{s}_1(x;h)^2},
-\end{equation*}
+\end{equation}
 kde 
-\begin{equation*}
+\begin{equation}
 \hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i),
-\end{equation*}
+\end{equation}
 ako vyplýva z názvu, v prípade týchto estimátorov prekladáme dáta priamkou (lineárnou funkciou).
 
 \item
 \textbf{Gasser-Müllerove odhady}
-\begin{equation*}
+\begin{equation}
 \hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
-\end{equation*}
+\end{equation}
 
 kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$, pre $x_i$ ekvidištantne rozdelené na [0,1]. Tento estimátor sa dá vhodne použiť pre odhad derivácie regresnej funkcie.
 

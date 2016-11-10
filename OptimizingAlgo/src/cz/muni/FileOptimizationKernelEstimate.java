@@ -10,7 +10,7 @@ import java.util.*;
 public class FileOptimizationKernelEstimate {
 
     public static void main(String[] args) {
-        String csvFile = "/Users/User/Documents/Skola/Bakina/Throughput/data-cele.csv";
+        String csvFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/dataCeleThroughputConst.csv";
         String line;
         String cvsSplitBy = ";";
         Map<Integer, Double> fullDataValues = new LinkedHashMap<>();
@@ -33,17 +33,20 @@ public class FileOptimizationKernelEstimate {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/kernelEstimation50-prelin.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/kernelEstimation30.csv";
         try (FileWriter writer = new FileWriter(resultFile)) {
 
             KernelEstimator kernelEstimator = new KernelEstimator();
-            Map<Integer, Double> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 50.0);
+            Map<Integer, List<Double>> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 30);
             int index = 0;
             for (Map.Entry<String, Double> entry : result.entrySet()) {
-                result.replace(entry.getKey(), estimatedValues.get(index));
+                result.replace(entry.getKey(), estimatedValues.get(index).get(0));
                 StringBuilder sb = new StringBuilder();
                 if (entry.getValue() != null) {
                     sb.append(entry.getKey()).append(';').append(entry.getValue());
+                    if( estimatedValues.get(index).size() > 1){
+                        sb.append(';').append(estimatedValues.get(index).get(1)).append(';').append(estimatedValues.get(index).get(2));
+                    }
                     sb.append("\n");
                     writer.append(sb.toString());
                 }

@@ -43,11 +43,11 @@ Vzorec pre jadrové odhady vo všeobecnosti, môžme zapísať nasledovne
 \begin{equation}
 \hat{m}(x,h) = \sum\limits_{i=1}^{n} W_i(x,h)Y_i,
 \end{equation}
-kde $ W_i(x,h)$ je váhová funkcia s vyhladzovacím parametrom \textit{h}. Ide teda o akýsi vážený súčet pozorovaní, ktorý v prípade, že použijeme metódu vážených štvorcov môže mať tvar
-\begin{equation}\label{metodaVazStvorcov}
-K_h(x - x_i) = \frac{1}{h}K\Big(\frac{x-x_i}{h}\Big),
+kde $ W_i(x,h)$ je váhová funkcia s vyhladzovacím parametrom \textit{h}. Ide teda o akýsi vážený súčet pozorovaní, ktorý v jednom z najjednoduchších prípadov môže mať tvar
+\begin{equation}\label{vahovaFunkcia}
+W_i(x,h) = K_h(x - x_i) = \frac{1}{h}K\Big(\frac{x-x_i}{h}\Big),
 \end{equation}
-kde \textit{K} je jadrová funkcia.
+kde \textit{K} je jadrová funkcia. Váhová funkcia by mala dávať súčet váh 1.
 
 \subsection{Jadrová funkcia}
 \begin{figure}[!ht]
@@ -103,11 +103,11 @@ c) \int z^2K(z)dz < \infty \qquad & d) K(x) \geq 0 \enspace \textrm{pre všetky}
 
 \subsection{Šírka vyhladzovacieho okna}
 
-Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy je šírka vyhladzovacieho okna $h$.Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
+Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy šírka vyhladzovacieho okna $h$.Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
 
 Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí bodu $x_i$ a teda odhad do veľkej miery reprodukuje pôvodné dáta. Naopak, ak zvolíme vysokú hodnotu $h$, aj veľmi vzdialené hodnoty majú vysoký dopad na odhad, čo vedie k ``prehladeniu'' a pri dostatočne veľkej šírke $h$ až k priemeru dát.
 
- Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použité reaálne dáta meranie použitej pamäte nástroja Perfcake. Aplikované sú Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole, s Gaussovou jadrovou funkciou. 
+ Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použité reaálne dáta meranie použitej pamäte nástroja PerfCake. Aplikované sú Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole, s Gaussovou jadrovou funkciou. 
  
  \begin{figure}[!ht]
   \includegraphics[scale=0.25]{kernelEstimationMemory005.pdf}
@@ -154,38 +154,46 @@ Aj keď je táto metóda jedna z najpoužívanejších, negarantuje nestrannosť
 
 Viac o metóde krížového overenia, ale aj iných metódach na odhad optimálnej šírky vyhladzovacieho okna, napr. Malloowsova metóda, Penalizačná metóda, alebo metóda založená na Fourierovej transformácii, môžme nájsť v [(Kernel smoothing)].
 \subsection{Typy jadrových odhadov}
-V tejto podkapitole si uvedieme konkrétne typy jadrových odhadov, ktoré sú uvedené v zdrojoch ...
+V tejto podkapitole si uvedieme niektoré najznámejšie typy jadrových odhadov, ktoré sú uvedené v zdrojoch ...
 
-Medzi najznámejšie jadrové odhady patria:
-
-\begin{itemize}
-\item  \textbf{Nadaraya-Watsonove odhady}
-
-\begin{equation}\label{Nadaraya-Watson}
-\hat{m}_{MW}(x;h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)},
+Ak ako váhovú funkciu použijeme (\ref{vahovaFunkcia}) dostávame \textbf{Priestley-Chaove odhady}
+\begin{equation}
+\hat{m}_{PCH}(x;h) = \frac{1}{n} \sum\limits_{i=1}^{n} K_h(x - x_i)Y_i.
 \end{equation}
-tento estimátor zabezpečuje, aby súčet váh bol 1. Je to prípad, kedy preložíme dáta konštantnou funkciou. Môžme si tiež všimnúť, že ak použijeme Nadaraya-Watsonove odhady s obdĺžnikovou jadrovou funkciou, dostaneme metódu kĺzavých priemerov (\ref{metodaVazenychPriemerov}).
+Modifikovaním tohto estimátora získame ďalší známy typ jadrových odhadov, \textbf{Gasser-Müllerove odhady}
+\begin{equation}
+\hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
+\end{equation}
+kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$, pre $x_i$ ekvidištantne rozdelené na [0,1]. Tento estimátor sa dá vhodne použiť pre odhad derivácie regresnej funkcie.
 
-\item
+Nasledujúce typy jadrových odhadov vychádzajú z takzvaných \textit{lokálne polynomiálnych jadrových odhadov}. Odhad neznámej regresnej funkcie v bode $x$ je získaný preložením polynómu stupňa $d$ váženou metódou najmenších štvorcov. Nech tento polynóm má tvar
+\begin{equation}
+P(u)=\beta_0 + \beta_1(u - x) + ... + \beta_d(u - x)^d.
+\end{equation}
+Váhy sú dané pomocou jadrovej funkcie 
+\begin{equation} \label{jadrovaFunkcia}
+K_h(x - x_i) = \frac{1}{h}K\Big(\frac{x-x_i}{h}\Big).
+\end{equation}
+Aplikujeme váženú metódu najmenších štvorcov, to znamená, že minimalizujeme výraz 
+\begin{equation}\label{minimVyraz}
+ \sum\limits_{i=1}^{n} \{Y_i - \beta_0 - \beta_1(x_i - x) - ... - \beta_d(x_i - x)^p\}^2 K_h(x_i - x)
+\end{equation}
+v závislosti na parametroch $\pmb{\beta} = (\beta_0,...,\beta_d)'$. Označme $\pmb{\hat{\beta}} = (\hat{\beta}_0,...,\hat{\beta}_d)'$ vektor, pre ktorý (\ref{minimVyraz}) nadobúda minimum. Odhad regresnej funkcie získaný popísanou metódou  je  hodnota parametra $\hat{\beta}_0$.\\
+Špeciálnym prípadom lokálne polynomiálnych odhadov, kde stupeň polynómu $d = 0$ sú \textbf{Nadaraya-Watsonove odhady}
+\begin{equation}\label{Nadaraya-Watson}
+\hat{m}_{MW}(x;h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)}.
+\end{equation}
+V tomto prípade prekladáme dáta konštantnou funkciou. Môžme si tiež všimnúť, že ak použijeme Nadaraya-Watsonove odhady s obdĺžnikovou jadrovou funkciou, dostaneme metódu kĺzavých priemerov (\ref{metodaVazenychPriemerov}).\\
+Druhým špeciálnym prípadom lokálne polynomiálnych odhadov, kde stupeň polynómu $d = 1$ a ide teda o priamku, sú 
  \textbf{Lokálne lineárne estimátory}
 \begin{equation}
 \hat{m}_{LL}(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}\frac{{\hat{s}_2(x;h) - \hat{s}_1(x;h)(x_i - x)}K_h(x-x_i)Y_i}{\hat{s}_2(x;h)\hat{s}_0(x;h) - \hat{s}_1(x;h)^2},
 \end{equation}
 kde 
 \begin{equation}
-\hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i),
-\end{equation}
-ako vyplýva z názvu, v prípade týchto estimátorov prekladáme dáta priamkou (lineárnou funkciou).
-
-\item
-\textbf{Gasser-Müllerove odhady}
-\begin{equation}
-\hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
+\hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i).
 \end{equation}
 
-kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$, pre $x_i$ ekvidištantne rozdelené na [0,1]. Tento estimátor sa dá vhodne použiť pre odhad derivácie regresnej funkcie.
-
-\end{itemize}
 
 
 \section{Miera polohy a miera variability}

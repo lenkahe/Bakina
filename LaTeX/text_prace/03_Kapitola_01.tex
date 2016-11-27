@@ -11,14 +11,14 @@ Táto kapitola sa venuje nástroju na testovanie výkonu PerfCake, jeho použiti
 
 \section{O nástroji}
 
-PerfCake je open-source framework vyvíjaný spoločnosťou Red Hat. Je to generátor zaťaženia s cieľom byť minimalistický a ľahko ovládateľný, poskytujúci stabilné výsledky, majúci minimálny vplyv na testovaný systém, byť nezávislý na platforme, umožňujúci vysokú priepustnosť a používajúci komponentový dizajn.
+PerfCake je open-source framework vyvíjaný spoločnosťou Red Hat, ktorý je primárne používaný na testovanie výkonu. Je to generátor zaťaženia s cieľom byť minimalistický a ľahko ovládateľný, poskytujúci stabilné výsledky, majúci minimálny vplyv na testovaný systém, byť nezávislý na platforme, umožňujúci vysokú priepustnosť a používajúci komponentový dizajn.
 
-Nástroj PerfCake môže byť použitý na na všetky druhy testovania výkonu, včetne: 
+Nástroj PerfCake môže byť použitý na všetky druhy testovania výkonu, včetne: 
 \begin{itemize}  
-\item \textit{záťažové testovanie (load testing)} - testuje sa správanie softvéru pri očakávanom zaťažení, pri tomto type testu sa prejavujú takzvané ``hrdlá fľaše''(\textit{bottlenecks}) v sytéme, miesta, ktoré v nejakom smere sytém limitujú,
-\item \textit{testovanie hraničnej záťaže (stress testing)}- tento test hľadá hranice možného zaťaženia systému a zisťuje správanie sa systému za touto hranicou,
+\item \textit{záťažové testovanie (load testing)} - testuje sa správanie softvéru pri očakávanom zaťažení, pri tomto type testu sa prejavujú takzvané ``najužšie miesto''(\textit{bottlenecks}) v sytéme, miesta, ktoré v nejakom smere sytém limitujú,
+\item \textit{testovanie hraničnej záťaže (stress testing)} - tento test hľadá hranice možného zaťaženia systému a zisťuje správanie sa systému za touto hranicou,
 \item \textit{testovanie odolnosti (endurance testing, soak testing)} - zisťuje sa, či testovaný systém dokáže vydržať sústavnú záťaž po dlhšiu dobu a taktiež, či pri takejto sústavnej záťaži neklesá jeho výkon,
-\item \textit{testovanie škálovateľnosti (scalability testing)} - testuje sa, či systém dobre škáluje a teda či je možné efektívne zvyšovať jeho kapacity bez zmien nečakaných správania,
+\item \textit{testovanie škálovateľnosti (scalability testing)} - testuje sa, či systém dobre škáluje a teda či je možné efektívne zvyšovať jeho kapacity bez nečakaných zmien správania,
 \item \textit{benchmarking} - zaznamenávanie a porovnávanie výsledkov testov, za účelom získania rôznych metrík.
 \end{itemize}
 
@@ -29,7 +29,7 @@ Pre účely spomínaných testov, podporuje PerfCake radu metrík na testovanie 
 \item sledovanie veľkosti spotrebovanej pamäte cieľovej JVM (Java virtual machine),
 \item zaznamenávanie času odpovede (response time) v milisekundách, pomocou HDR (High Dynamic Range) histogramu, ktorý dokáže riešiť problém Koordinovaného vynechania (Coordinated ommission), viac o tomto probléme a riešení pomocou HRD histogramu sa môžme dočítať na oficiálnej stránke nástroja v sekcii 4.7. Reporting [],
 \item počítanie štatistík, ako maximum, minimum, priemer z hodnôt priepustnosti alebo časov odpovedí, za čas od začiatku trvania testu, až po reportovanie výsledku alebo zo špecifikovaného časového okna,
-\item detekovanie pripravenosti systému, ktorá sa určuje pomocou splnenia 3 podmienok, momentálna priepustnosť sa mení o menej ako nastaviteľná hranica, špecifikovaný čas bol dosiahnutý a špecifikovaný počet iterácií bol vykonaný,
+\item detekovanie pripravenosti systému, ktorá sa určuje pomocou splnenia 3 podmienok: momentálna priepustnosť sa mení o menej ako nastaviteľná hranica, špecifikovaný čas bol dosiahnutý a špecifikovaný počet iterácií bol vykonaný,
 \item  rozoznávanie geo-lokácie tretích strán.
 \end{itemize}
 
@@ -40,7 +40,7 @@ Jeden z problémov podobných testovacích nástrojov je prípad, kedy testovan�
 
 \section{Použitie}
 
-Pre spustenie nástroja PerfCake je potrebné vytvoriť, takzvané scenáre (scenarios). V týchto súboroch sú definované testovacie bloky, ktoré hovoria PerfCaku čo a ako robiť. Scenáre sú rozdelené do niekoľko sekcií:
+Pre spustenie nástroja PerfCake je potrebné vytvoriť, takzvané scenáre (scenarios). V týchto súboroch sú definované testovacie bloky, ktoré hovoria PerfCaku čo a ako robiť. Scenáre sú rozdelené do niekoľkých sekcií:
 \begin{itemize}
 \item \textit{vlastnosti (properties)} - táto sekcia slúži na pridanie akýchsi meta-dát o scenári, nie je to povinný parameter a slúži na komplexnejšie využitie testovacích scenárov,
 \item \textit{beh (run)} - slúži na  definovanie dĺžky trvania testu,
@@ -123,7 +123,7 @@ Ako bolo uvedené v prvej podkapitole, PerfCake má bohaté možnosti východzí
 
 Pri optimalizácií dát pre potreby vykresľovania do grafov, bude používaný formát súboru CSV, ktorý môžeme previesť do podoby tabuľky.
 
-Tabuľka  \ref{tab:Data} ukazuje dáta vygenerované nástrojom PerfCake za 20 minút, testovala sa priepustnosť softvéru v iteráciách za sekundu a využitie pamäte v megabajtoch. Pri vytváraní algoritmu budeme pracovať len s dátami, ktoré boli vytvorené pri testovaní týchto dvoch vlastností softvéru. Pri priepustnosti sa počíta priemer za časovú jednotku (current) a tiež priemer za niekoľko časových jednotiek (average), časová jednotka a veľkosť okna, s ktorými sa bude počíta sa 
+Tabuľka  \ref{tab:Data} ukazuje dáta vygenerované nástrojom PerfCake za 20 minút, testovala sa priepustnosť softvéru v iteráciách za sekundu a využitie pamäte v megabajtoch. Pri vytváraní algoritmu budeme pracovať len s dátami, ktoré boli vytvorené pri testovaní týchto dvoch vlastností softvéru. Pri priepustnosti sa počíta priemer za časovú jednotku (current) a tiež priemer za niekoľko časových jednotiek (average), časová jednotka a veľkosť okna, s ktorými sa bude počítať sa 
 dá nastaviť v scenári, pri dátach s tabuľky je to minúta a 15 záznamov. Priemer sa začína počítať, keď sa naplní okno a potom už pre každý ďalší záznam. 
 
 Pri testovaní využívania pamäte sa zaznamenáva použitá (used) a celková pamäť (total). Celková pamäť, je pamäť, ktorú si  JVM alokuje a použitá pamäť je pamäť, ktorú naozaj využije - celková mínus voľná pamäť. Viac o pamäti v JVM sa čitateľ dozvie v oficiálnej dokumentácií(http://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html).
@@ -133,7 +133,7 @@ V popisovanej tabuľke sú dáta zaznamenané za 20 min, v praxi ale tie testy b
 
 \subsection{Grafy}
 
-Pomocou grafu vieme často do mozgu preniesť oveľa viac informácií. 
+Pomocou grafu je často jednoduchšie pochopiť a spracovať veľké množstvo informácií, ako zo surových čísel v obrovskej tabuľke. 
 Na obrázku  \ref{grafy} sú znázornené grafy z testov, ktoré bežali 108 hodín, a ktorých prvých 20 záznamov sme si ukázali v tabuľke  \ref{tab:Data}. Pre analýzu výsledku nie sú potrebné tak presné grafy, väčšinou je dôležitá hodnota okolo ktorej dáta v určitej časti grafu konvergujú, alebo či hodnoty veľmi ``skáču''. V bakalárskej práci budú tieto grafy upravené a následne porovnávané s grafmi, ktoré budú vykreslené z dát, na ktoré sa použije optimalizačný algoritmus.
 
 

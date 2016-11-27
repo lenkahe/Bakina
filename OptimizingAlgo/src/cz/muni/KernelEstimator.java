@@ -1,10 +1,7 @@
 package cz.muni;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class KernelEstimator {
 
@@ -13,7 +10,7 @@ public class KernelEstimator {
 
     public Map<Integer, List<Double>> kernelEstimate(Map<Integer, Double> timeSeries, Integer smoothingWindow) {
 
-        Map<Integer, List<Double>> result = new HashMap<>();
+        Map<Integer, List<Double>> result = new LinkedHashMap<>();
         List<Map.Entry<Integer, Double>> subMap;
         List<Map.Entry<Integer, Double>> entryList = new ArrayList<>(timeSeries.entrySet());
         int counter = 0;
@@ -24,12 +21,11 @@ public class KernelEstimator {
             if (counter == 0) {
                 for (int j = 0; j <= smoothingWindow; j = j+1) {
                 //for (Map.Entry<Integer, Double> value : subMap) {
-                    kernelEstimateForX(result, subMap, subMap.get(j), smoothingWindow);
+                    kernelEstimateForX(result, subMap.subList(counter, j + smoothingWindow), subMap.get(j), smoothingWindow);
                 }
-
             } else  if(counter + 2*smoothingWindow > timeSeries.size()){
                 for (int j = smoothingWindow; j < subMap.size(); j = j+1){
-                    kernelEstimateForX(result, subMap, subMap.get(j), smoothingWindow);
+                    kernelEstimateForX(result, subMap.subList(j - smoothingWindow, subMap.size()), subMap.get(j), smoothingWindow);
                 }
                 break;
             } else{
@@ -49,8 +45,8 @@ public class KernelEstimator {
         Double smoothingWindowDouble = smoothingWindow.doubleValue();
         //Map.Entry<Integer, Double> value = subMap.get(i);
         for (Map.Entry<Integer, Double> subValue : subMap) {
-            denominator = denominator + (1 / smoothingWindowDouble * ((1 / Math.sqrt(2 * Math.PI)) * Math.pow(Math.E, -(Math.pow((value.getKey() - subValue.getKey()) / smoothingWindowDouble, 2) / 2)))) * subValue.getValue();
-            numerator = numerator + (1 / smoothingWindowDouble * ((1 / Math.sqrt(2 * Math.PI)) * Math.pow(Math.E, -(Math.pow((value.getKey() - subValue.getKey()) / smoothingWindowDouble, 2) / 2))));
+            denominator = denominator + (( 1 -(Math.pow((value.getKey() - subValue.getKey()) / smoothingWindowDouble, 2))) * subValue.getValue());
+            numerator = numerator + (1 - Math.pow((value.getKey() - subValue.getKey()) / smoothingWindowDouble, 2));
         }
         if (result.keySet().contains(value.getKey())) {
             Double average =  (denominator / numerator + result.get(value.getKey()).get(0))/2;

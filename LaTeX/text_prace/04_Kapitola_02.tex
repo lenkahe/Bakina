@@ -1,6 +1,6 @@
 \chapter{Matematická teória}
 
-V tejto kapitole uvedieme potrebné znalosti z matematickej teórie, ktoré sú potrebné pre zostrojenie optimalizačných algoritmov, ktorými sa budeme zaoberať v následujúcich kapitolách.Najprv sa oboznámime s úvodom do regresnej analýzy a s neparametrickou metódou odhadu regresnej funkcie - metódou jadrových odhadov,ktorú použijeme na vyhladenie dát. Na konci kapitoly si ešte uvedieme vzorce pre aritmetický priemer, rozptyl a smerodajnú odchýlku, budú použité na redukciu dát. Pojmy a definície sú prebraté zo zdrojov...
+V tejto kapitole uvedieme znalosti z matematickej teórie, ktoré sú potrebné pre zostrojenie optimalizačných algoritmov, ktorými sa budeme zaoberať v následujúcich kapitolách. Najprv sa oboznámime s úvodom do regresnej analýzy a s neparametrickou metódou odhadu regresnej funkcie - metódou jadrových odhadov, ktorú použijeme na vyhladenie dát. Na konci kapitoly si ešte uvedieme vzorce pre aritmetický priemer, rozptyl a smerodajnú odchýlku, ktoré budú použité na redukciu dát. Pojmy a definície sú prebraté zo zdrojov...
 
 %Po dôkladnom oboznámení sa s dátami, ktoré generuje performačný nástroj Perfcake sme usúdili, že ak dáta a teda grafy %``vyhladíme'', užívateľ nestratí podstatnú informáciu, ktorú dáta nesú. Po aplikovaní kĺzavých priemerov, sme sa %rozhodli použiť zovšeobecnenie tejto metódy a teda metódu jadrových odhadov. Prvá časť tejto kapitoly sa venuje úvodu %do tejto metódy. Budú použité definície a pojmy zo zdroja 1 a 2. 
 
@@ -38,7 +38,7 @@ Jadrové odhady sa považujú za zovšeobecnenie \textit{metódy kĺzavých prie
 
 \section{Jadrové odhady}\label{JadroveOdhady}
 
-Pri odhadovaní regresnej funkcie pomocou jadrových odhadov, sa taktiež používajú vážené hodnoty $Y$ v centrovanom okolí príslušného bodu $x_i$. Váhy hodnôt $Y$ sú závislé na vzdialenosti príslušných $x$ bodov od konkrétneho $x_i$, bližšie hodnoty  -  väčšia váha. Toto nám pomáha dosiahnuť \textit{jadrová funkcia}. 
+Pri odhadovaní regresnej funkcie pomocou jadrových odhadov, sa používajú vážené hodnoty $Y$ v centrovanom okolí príslušného bodu $x_i$. Váhy hodnôt $Y$ sú závislé na vzdialenosti príslušných $x$ bodov od konkrétneho $x_i$, bližšie hodnoty  -  väčšia váha. Toto nám pomáha dosiahnuť \textit{jadrová funkcia}. 
 Vzorec pre jadrové odhady vo všeobecnosti, môžme zapísať nasledovne
 \begin{equation}
 \hat{m}(x,h) = \sum\limits_{i=1}^{n} W_i(x,h)Y_i,
@@ -103,17 +103,21 @@ c) \int z^2K(z)dz < \infty \qquad & d) K(x) \geq 0 \enspace \textrm{pre všetky}
 
 \subsection{Šírka vyhladzovacieho okna}
 
-Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy šírka vyhladzovacieho okna $h$.Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
+Okrem jadrovej funkcie, alebo jadra, je ďalším dôležitým parametrom tejto metódy šírka vyhladzovacieho okna $h$. Šírka vyhladzovacieho okna alebo aj vyhladzovací parameter \textit{h} udáva šírku vyhladzovacej funkcie a teda aj silu vyhladenia. 
 
 Malá šírka vyhladzovacieho okna znamená, že odhad závisí na úzkom okolí bodu $x_i$ a teda odhad do veľkej miery reprodukuje pôvodné dáta. Naopak, ak zvolíme vysokú hodnotu $h$, aj veľmi vzdialené hodnoty majú vysoký dopad na odhad, čo vedie k ``prehladeniu'' a pri dostatočne veľkej šírke $h$ až k priemeru dát.
 
- Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použité reaálne dáta meranie použitej pamäte nástroja PerfCake. Aplikované sú Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole, s Gaussovou jadrovou funkciou. 
+ Spomínané rozdieli v šírke vyhladzovacieho okna môžme vidieť na obrázku \ref{porovnanieSirky}. Pre ilustráciu vplyvu vyhladzovacieho parametra sú použité reálne dáta z merania použitej pamäte nástroja PerfCake. Aplikované sú Nadaraya-Watsonove odhady, ktoré sú popísané v nasledujúcej podkapitole, s Epanečnikovým jadrovou funkciou. 
  
  \begin{figure}[!ht]
-  \includegraphics[scale=0.25]{kernelEstimationMemory005.pdf}
-  \includegraphics[scale=0.25]{kernelEstimationMemory8.pdf}
+  \includegraphics[scale=0.45]{jadro1.png}
+  \hspace{15px}
+  \includegraphics[scale=0.45]{jadro10.png}
+   
+   \vspace{30px}
+   
   \centering
-  \includegraphics[scale=0.27]{kernelEstimationMemory2.pdf}
+  \includegraphics[scale=0.45]{jadro5.png}
   \caption{Porovnanie šírky vyhladzovacieho okna, bodky sú pôvodné dáta, súvislá čiara odhadnutá regresná funkcia}\label{porovnanieSirky}
 \end{figure}
 
@@ -134,7 +138,7 @@ Minimalizovaním týchto chýb pre hodnotu parametra $h$, dostávame jeho optimu
 Keďže vzorec pre AMSE obsahuje neznáme hodnoty regresnej funkcie, použijeme pre výpočet optimálnej hodnoty parametra $h$, \textit{reziduálny súčet štvorcov (RSS)}, kde tieto neznáme hodnoty nahradíme nameranými hodnotami $Y_i$.
 Teda
 \begin{equation}
- RSS_n(h) = \frac{1}{n}\sum\limits_{i=1}^{n} {\{Y_i - m(x_i,h)\}}^2.
+ RSS_n(h) = \frac{1}{n}\sum\limits_{i=1}^{n} {\{Y_i - \hat{m}(x_i,h)\}}^2.
 \end{equation}
  RSS ale nie je nestranným odhadom AMSE, preto sa metódy pre odhad optimálnej šírky vyhladzovacieho okna snažia RSS upraviť tak, aby bol nestranný. 
  
@@ -158,11 +162,11 @@ V tejto podkapitole si uvedieme niektoré najznámejšie typy jadrových odhadov
 
 Ak ako váhovú funkciu použijeme (\ref{vahovaFunkcia}) dostávame \textbf{Priestley-Chaove odhady}
 \begin{equation}
-\hat{m}_{PCH}(x;h) = \frac{1}{n} \sum\limits_{i=1}^{n} K_h(x - x_i)Y_i.
+\hat{m}_{PCH}(x,h) = \frac{1}{n} \sum\limits_{i=1}^{n} K_h(x - x_i)Y_i.
 \end{equation}
 Modifikovaním tohto estimátora získame ďalší známy typ jadrových odhadov, \textbf{Gasser-Müllerove odhady}
 \begin{equation}
-\hat{m}_{GM}(x;h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
+\hat{m}_{GM}(x,h) = \sum\limits_{i=1}^{n} Y_i \int\limits_{s_i-1}^{s_i}K_h(t-x)dt,
 \end{equation}
 kde $s_0 = 0 , s_i = \frac{x_i + x_{i+1}}{2}, s_n = 1$, pre $x_i$ ekvidištantne rozdelené na [0,1]. Tento estimátor sa dá vhodne použiť pre odhad derivácie regresnej funkcie.
 
@@ -181,17 +185,17 @@ Aplikujeme váženú metódu najmenších štvorcov, to znamená, že minimalizu
 v závislosti na parametroch $\pmb{\beta} = (\beta_0,...,\beta_d)'$. Označme $\pmb{\hat{\beta}} = (\hat{\beta}_0,...,\hat{\beta}_d)'$ vektor, pre ktorý (\ref{minimVyraz}) nadobúda minimum. Odhad regresnej funkcie získaný popísanou metódou  je  hodnota parametra $\hat{\beta}_0$.\\
 Špeciálnym prípadom lokálne polynomiálnych odhadov, kde stupeň polynómu $d = 0$ sú \textbf{Nadaraya-Watsonove odhady}
 \begin{equation}\label{Nadaraya-Watson}
-\hat{m}_{MW}(x;h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)}.
+\hat{m}_{NW}(x,h) = \frac{\sum\limits_{i=1}^{n} K_h(x - x_i)Y_i}{\sum\limits_{i=1}^{n} K_h(x - x_i)}.
 \end{equation}
 V tomto prípade prekladáme dáta konštantnou funkciou. Môžme si tiež všimnúť, že ak použijeme Nadaraya-Watsonove odhady s obdĺžnikovou jadrovou funkciou, dostaneme metódu kĺzavých priemerov (\ref{metodaVazenychPriemerov}).\\
 Druhým špeciálnym prípadom lokálne polynomiálnych odhadov, kde stupeň polynómu $d = 1$ a ide teda o priamku, sú 
  \textbf{Lokálne lineárne estimátory}
 \begin{equation}
-\hat{m}_{LL}(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}\frac{{\hat{s}_2(x;h) - \hat{s}_1(x;h)(x_i - x)}K_h(x-x_i)Y_i}{\hat{s}_2(x;h)\hat{s}_0(x;h) - \hat{s}_1(x;h)^2},
+\hat{m}_{LL}(x,h) = \frac{1}{n}\sum\limits_{i=1}^{n}\frac{{\hat{s}_2(x;h) - \hat{s}_1(x;h)(x_i - x)}K_h(x-x_i)Y_i}{\hat{s}_2(x;h)\hat{s}_0(x;h) - \hat{s}_1(x;h)^2},
 \end{equation}
 kde 
 \begin{equation}
-\hat{s}_r(x;h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i).
+\hat{s}_r(x,h) = \frac{1}{n}\sum\limits_{i=1}^{n}(x_i - x)^rK_h(x-x_i).
 \end{equation}
 
 
@@ -199,11 +203,11 @@ kde
 \section{Miera polohy a miera variability}
 Ako bolo uvedené na začiatku kapitoly, v tejto podkapitole sa oboznámime ešte s niektorými pojmami zo štatistiky.
 
-Majme \textit{súbor hodnôt}
+Majme \textit{súbor hodnôt} nejakej náhodnej veličiny
  \begin{equation}
 x_1,x_2,x_3,...,x_n,
 \end{equation}  
-kde \textit{n} je rozsah súboru a jeho hodnoty sú intervalového alebo pomerového typu. To znamená, že je možné  stanoviť vzdialenosti medzi meranými hodnotami, a teda počítať s ich rozdielami. Tento súbor hodnôt môžme analyzovať niekoľkými spôsobmi.
+kde \textit{n} je rozsah súboru a jeho hodnoty sú intervalového alebo pomerového typu. To znamená, že je možné  stanoviť vzdialenosti medzi meranými hodnotami, a teda počítať s ich rozdielami. Tento súbor hodnôt môžme analyzovať niekoľkými spôsobmi. Oboznámime sa niekoľkými charakteristikami takýchto náhodných veličín.
 
 \subsection{Aritmetický priemer}
 Na určenie hodnoty, okolo ktorej sa hodnoty jednotlivých pozorovaní nachádzajú je vhodný aritmetický priemer daného súboru. 
@@ -227,7 +231,7 @@ V prípade, že rozptyl počítame iba zo vzorky hodnôt, a nie z celého súbor
  \begin{equation}
 s^2 = \frac{1}{n-1}\sum\limits_{i=1}^{n}(x_i - \bar{x})^2,
 \end{equation}
-vďaka tejto úprave bude rozptyl jemne väčší. Táto korektúra sa používa na zmiernenie zkreslenia výsledku pri výpočte zo zmenšeného počtu dát.
+vďaka tejto úprave bude vypočítaný rozptyl jemne väčší, čím sa stáva nestranným odhadom skutočného rozptylu. Táto korektúra sa používa na zmiernenie zkreslenia výsledku pri výpočte zo zmenšeného počtu dát.
 
 Smerodajná odchýlka je daná ako odmocnina z rozptylu
 \begin{equation}

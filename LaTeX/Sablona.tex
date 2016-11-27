@@ -100,7 +100,7 @@
 
 \Autor{Lenka Heldová}{Lenka Heldová}
 
-\NazevPrace{Název práce na titulní list}{Název práce}{Title of Thesis}
+\NazevPrace{Analýza a návrh algoritmů pro optimalizaci vizualizace dat}{Analýza a návrh algoritmů pro optimalizaci vizualizace dat}{Analysis and design of algorithms to optimize data visualization}
 %% Pokud nazev prace obsahuje nejake matematicke formule, tak je kvuli velikosti fontu pouzit prikaz \scalebox a nazev
 %% zalamat rucne - toto plati pouze pro nazev prace na titulni list
 %% {Rozbor řešení rovnice \scalebox{1.15}{${y''=f(x)\,x^{\scalebox{0.4}2}}$} s~počátečními podmínkami
@@ -113,17 +113,15 @@
 %% viz take http://orgmode.org/worg/org-symbols.html
 %%
 
-\VedouciPraceSTituly{Plné jméno včetně titulů} %% Neni potreba pro rigorozni prace
+\VedouciPraceSTituly{Mgr. Jiří Zelinka, Dr.} %% Neni potreba pro rigorozni prace
 
-\StudijniProgram{Studijní program}{Degree programme}
+\StudijniProgram{Matematika}{Mathematics}
 
-\StudijniObor{Studijní obor}{Field of Study}
+\StudijniObor{Modelování a výpočty}{Modelling and Calculations}
 
 \PocetStran{??\,$+$\,??}
 
-\KlicovaSlova{Klíčové slovo; Klíčové slovo; Klíčové slovo; Klíčové slovo; Klíčové slovo; Klíčové slovo;
-Klíčové slovo; Klíčové slovo}{Keyword; Keyword; Keyword; Keyword; Keyword; Keyword; Keyword;
-Keyword; Keyword}
+\KlicovaSlova{Klíčové slovo;}
 
 \Abstrakty%
 {V této bakalářské/diplomové/rigorózní práci se věnujeme ...}%
@@ -195,7 +193,7 @@ zdrojů, které jsou v práci citovány.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% VYTVOR POMOCNY SOUBOR PRO REJSTRIK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\makeindex
+%\makeindex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% ZAPNUTI OPAKOVANI MATEMATICKYCH SYMBOLU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,24 +209,24 @@ zdrojů, které jsou v práci citovány.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% POVINNE CASTI %%%%%%%%%%%%%%%%%
 
-\VytvorPovinneStrany
+%\VytvorPovinneStrany
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% POVINNE CASTI PRO PRACE PSANE SLOVENSKY %%%%%%%%%%%%%%%%%
 % 
-% \NazevPraceSLOVENSKY{...}
+ \NazevPraceSLOVENSKY{Analýza a návrh algoritmov pre optimalizáciu vizualizácie dát}
 % 
-% \NazevUstavuSLOVENSKY{...}
+\NazevUstavuSLOVENSKY{Ústav matematiky a štatistiky}
 % 
-% \StudijniProgramSLOVENSKY{...}
+\StudijniProgramSLOVENSKY{Matematika}
 % 
-% \StudijniOborSLOVENSKY{***}
+\StudijniOborSLOVENSKY{Modelovanie a výpočty}
 % 
-% \KlicovaSlovaSLOVENSKY{bbb}
+\KlicovaSlovaSLOVENSKY{bbb}
 % 
-% \AbstraktSLOVENSKY{...}
+\AbstraktSLOVENSKY{...}
 % 
-% \VytvorPovinneStranySLOVENSKY
+\VytvorPovinneStranySLOVENSKY
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% POVINNE CASTI PRO RIGOROZNI PRACE %%%%%%%%%%%%%%%%%%%%%%%
@@ -243,7 +241,7 @@ zdrojů, které jsou v práci citovány.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABSTRAKT + ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\AbstraktyNaJedneStrane
+%\AbstraktyNaJedneStrane
 
 %%%%%%%%%%%%%%%%%%%%%% POKUD SE ABSTRAKTY NEVEJDOU NA JEDNU STRANU, POUZIJTE TOTO NASTAVENI %%%%%%%
 
@@ -252,7 +250,7 @@ zdrojů, které jsou v práci citovány.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABSTRAKT + ABSTRAKT + ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \AbstraktyNaJedneStraneSLOVENSKY
+\AbstraktyNaJedneStraneSLOVENSKY
 
 %%%%%%%%%%%%%%%%%%%%%% POKUD SE ABSTRAKTY NEVEJDOU NA JEDNU STRANU, POUZIJTE TOTO NASTAVENI %%%%%%%
 
@@ -273,7 +271,7 @@ zdrojů, které jsou v práci citovány.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% PODEKOVANI + PROHLASENI %%%%%%%%%%%%%%%
 
-\PodekovaniAProhlaseni
+%\PodekovaniAProhlaseni
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -321,24 +319,27 @@ zdrojů, které jsou v práci citovány.}
 \vloz{text_prace/06_Kapitola_04}
 \cleardoublepage
 
+\vloz{text_prace/07_Kapitola_05}
+\cleardoublepage
+
 \HlavickaZaver
 % \pdfbookmark{Závěr}{Zaver}
 \vloz{text_prace/05_Zaver}
 \cleardoublepage
 
-\HlavickaPriloha
+%\HlavickaPriloha
 % \pdfbookmark{Příloha}{Priloha}
-\vloz{text_prace/06_Priloha}
-\cleardoublepage
+%\vloz{text_prace/06_Priloha}
+%\cleardoublepage
 
 \renewcommand{\bibname}{Seznam použité literatury}
 \HlavickaLiteratura
 \vloz{text_prace/07_Literatura}
 \cleardoublepage
 
-\renewcommand{\indexname}{Rejstřík}
-\HlavickaRejstrik
-\VytvorRejstrik  
+%\renewcommand{\indexname}{Rejstřík}
+%\HlavickaRejstrik
+%\VytvorRejstrik  
 %%
 %% pro vytvoreni rejstriku se spravny ceskym razenim pouzijte 
 %% csindex -d -h -k -z il2 nazev_souboru.idx

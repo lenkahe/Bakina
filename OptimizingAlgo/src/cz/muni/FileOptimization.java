@@ -11,17 +11,17 @@ import static java.lang.Math.abs;
 public class FileOptimization {
 
     public static void main(String[] args) {
-        String csvFile = "/Users/User/Documents/Skola/Bakina/Throughput/kernelEstimation30.csv";
+        String csvFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/kernelEstimation30.csv";
         String line;
         String cvsSplitBy = ";";
-        int windowCounter = 0;
         List<Double> window = new ArrayList<>();
-        List<Double> fullDataValues = new ArrayList<>();
         Map<String, Double> result = new LinkedHashMap<>();
         Double average;
         Double variance;
         Double varianceBefore;
         String lastTime = "";
+        String lastValue = "";
+        Double deviationBefore = 0d;
 
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             line = br.readLine();
@@ -32,16 +32,13 @@ public class FileOptimization {
                 // use comma as separator
                 String[] values = line.split(cvsSplitBy);
                 Double nextValue = Double.valueOf(values[1]);
-                fullDataValues.add(nextValue);
 
 
                 //initialization
                 if (result.isEmpty()){
                     result.put(values[0],nextValue);
-                    window.add(windowCounter, nextValue);
-                    windowCounter = windowCounter >= 9 ? 0 : ++windowCounter;
+                    window.add(nextValue);
                     line = br.readLine();
-                    lastTime = values[0];
                     continue;
                 }
                 if((line = br.readLine()) == null ){
@@ -49,21 +46,10 @@ public class FileOptimization {
                     continue;
                 }
 
-                if(window.size() > windowCounter){
-                    window.remove(windowCounter);
+                if(window.size() > 9){
+                    window.remove(0);
                 }
-                for (Double value : window) {
-                    sum = sum + value;
-                }
-
-                average = sum/window.size();
-                sum = 0.0;
-                for (Double value : window) {
-                    sum = sum + Math.pow(average - value, 2);
-                }
-                varianceBefore =sum /window.size();
-                window.add(windowCounter, nextValue);
-                windowCounter = windowCounter >= 9 ? 0 : ++windowCounter;
+                window.add(nextValue);
                 sum = 0.0;
                 for (Double value : window) {
                     sum = sum + value;
@@ -76,29 +62,30 @@ public class FileOptimization {
                 }
                 variance =sum /(window.size()-1);
                 Double standartDeviation = Math.sqrt(variance);
-                //if (Math.abs(average - nextValue) > standartDeviation){
+                //if (Math.abs(average - nextValue) > deviationBefore * 2){
                 //if(Math.abs(Math.sqrt(variance) - Math.sqrt(varianceBefore)) > 0.01){
-                if(abs(average - nextValue) > 0.15){
-                    result.put(lastTime, window.get(windowCounter != 0 ? windowCounter - 1 : 9));
-                    result.put(average.toString(), nextValue);
+                //if(abs(average - nextValue) > 0.15 ){
+                if(standartDeviation > deviationBefore*1.3){
+                    //result.put(lastTime, Double.valueOf(lastValue));
+                    result.put(values[0], nextValue);
                 } else{
-                    result.put(values[0], 0d);
+                   // result.put(values[0], 0d);
                 }
                /* if(window.size() > windowCounter){
                     window.remove(windowCounter);
                 }
                 window.add(windowCounter, nextValue);
                 windowCounter = windowCounter >= 9 ? 0 : ++windowCounter;*/
-                lastTime = values[0];
+                deviationBefore = standartDeviation;
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/reducedFile1.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/smerodjanaPriemer301,4.csv";
 
-        Integer valueCounter = 0;
+        //Integer valueCounter = 0;
         try (FileWriter writer = new FileWriter(resultFile)) {
 
 
@@ -110,17 +97,17 @@ public class FileOptimization {
                     writer.append(sb.toString());
                 }
                 if (entry.getValue() != 0d){
-                    valueCounter++;
+                    //valueCounter++;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        CountingForRco countingForRco = new CountingForRco();
-        countingForRco.countigZeroValue(result);
+       /* CountingForRco countingForRco = new CountingForRco();
+        countingForRco.countigZeroValue(result);*/
 
-        Map<String, Integer> resultMap = countingForRco.rocValues(fullDataValues, new ArrayList<>(result.values()));
-        for (Map.Entry<String,Integer> entry : resultMap.entrySet()){
+        //Map<String, Integer> resultMap = countingForRco.rocValues(fullDataValues, new ArrayList<>(result.values()));
+        /*for (Map.Entry<String,Integer> entry : resultMap.entrySet()){
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
         Integer TP = resultMap.get("truePositive");
@@ -130,8 +117,8 @@ public class FileOptimization {
 
         System.out.println("Sensitivita = TP/(TP+FN): " + TP * 1.0/(TP+FN));
         System.out.println("Specificnost =  FP/(TN+FP): " + FP * 1.0/(TN+FP));
-
-        System.out.println(valueCounter);
+*/
+        System.out.println(result.size());
     }
 
 }

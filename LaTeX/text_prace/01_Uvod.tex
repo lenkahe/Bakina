@@ -1,33 +1,18 @@
 \chapter*{Úvod}
 \addcontentsline{toc}{chapter}{Úvod}
+ 
+Aplikovanie matematiky je dnes potrebné v nespočetne veľa odvetviach bežného ale aj technického života. Počas štúdia som sa začala viac venovať programovaniu, čo ma priviedlo k tejto práci. Pri vývoji softvéru je potrebné testovanie rôznych druhov. Program PerfCake je nástroj, ktorý slúži na testovanie výkonu, ktorý dokáže vizualizovať výsledky pomocou grafov. V priebehu testu sa ale môže nazhromaždiť desaťtisíce záznamov dát. Vykresľovať pomocou grafu takéto množstvo dát je pamäťovo aj časovo náročné a preto sa v tejto práci snažím nájsť optimalizačno redukčný algoritmus, ktoré zredukuje počet takéhoto množstva dát, pričom zachová informáciu vychádzajúcu z daného grafu. Práca je členená do šiestich kapitol.
 
-Test interpunkce:
-\begin{center}
-  Žluťoučký kůň úpěl ďábelské ódy\\
-  ěščřžýáíéľťňďúů
-\end{center}
+Prvá kapitola je rýchlym zoznámením sa s nástrojom PerfCake, vyvíjaným spoločnosťou Red Hat, a úvodom do testovania výkonu. Popisuje sa v nej tiež ako a načo všetko sa nástroj používa aké sú výstupy jeho testovania.
 
-Toto je nějaký úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. 
+V druhej kapitole sa čitateľ zoznámi s potrebnou matematickou teóriou, pre správne pochopenie podstaty nájdených optimalizačných algoritmov. Venujeme sa v nej regresívnej analýze a konkrétnej neparametrickej metóde pre nájdenie regresnej krivky - jadrovým odhadom. Na záver kapitoly sú ešte vysvetlené pojmy aritmetický priemer, rozptyl a smerodajná odchýlka.
 
-Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. Toto je nějaký
-úvodní text, ve kterém se obvykle popisuje struktura práce, cíle a případně i výsledky. 
+Tretia kapitola sa venuje analýze viacerých typov dát z nástroja PerfCake a pojednáva o tom, akú dôležitú informáciu dáta, a z nich vykreslený graf nesú.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%% GENERUJ TEXT %%%%%%%%%%%%%
+Štvrtá a piata kapitola opisujú proces optimalizovania dát. V štvrtej kapitole je popísané prvotné vyhladenie dát pomocou jadrových odhadov, pre odstránenie nepotrebnej informácie s grafu. V piatej kapitole je potom aplikovaná redukcia, v tejto kapitole sú uvedené tri redukčné algoritmy. Obidve kapitoly sú doplnené ukážkami grafov s výsledkami vyhladenia a redukcie na viacerých typoch dát.
 
-\shorthandoff{-}\lipsum[50-60]\shorthandon{-}
+Keďže cieľom práce je nájsť najvhodnejší algoritmus, v šiestej kapitole sú popísané algoritmy porovnané z niekoľkých hľadísk a pomocou tohto porovnania je vybraný najvhodnejší optimalizačno redukčný algoritmus pre nástroj PerfCake. 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Pre spracovanie dát a aplikovanie algoritmov na dáta bol napísaný program v jazyku Java, grafy boli následne vykresľované v programe Microsoft Excel a práca je vysádzaná v systéme \LaTeX.
 
-
+Na záver práce je priložená spätná väzba zo spoločnosti Red Hat.

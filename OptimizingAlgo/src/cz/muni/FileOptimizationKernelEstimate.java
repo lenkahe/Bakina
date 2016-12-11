@@ -10,7 +10,7 @@ import java.util.*;
 public class FileOptimizationKernelEstimate {
 
     public static void main(String[] args) {
-        String csvFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/dataCeleThroughputConst.csv";
+        String csvFile = "/Users/User/Documents/Skola/Bakina/Throughput/data-cele.csv";
         String line;
         Map<Integer, Double> fullDataValues = new LinkedHashMap<>();
         Integer counter =1;
@@ -30,11 +30,11 @@ public class FileOptimizationKernelEstimate {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/kernelEstimation30.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/jadroReduk30,40.csv";
         try (FileWriter writer = new FileWriter(resultFile)) {
 
             KernelEstimator kernelEstimator = new KernelEstimator();
-            Map<Integer, List<Double>> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 30);
+            Map<Integer, List<Double>> estimatedValues = kernelEstimator.kernelEstimate(fullDataValues, 30, 40);
             int index = 0;
             for (Map.Entry<Integer, List<Double>> entry : estimatedValues.entrySet()) {
                 StringBuilder sb = new StringBuilder();
@@ -52,9 +52,12 @@ public class FileOptimizationKernelEstimate {
                     //break;
                 //}
             }
+            System.out.println(estimatedValues.size());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
     }
 

@@ -20,6 +20,7 @@
 \usepackage{adjustbox}
 \usepackage{rotating}
 \usepackage{wrapfig}
+\usepackage[dvipsnames]{xcolor}
 
 %%%%%%%%%%%%
 %% Zvolte kodovani dokumentu
@@ -119,22 +120,25 @@
 
 \StudijniObor{Modelování a výpočty}{Modelling and Calculations}
 
-\PocetStran{??\,$+$\,??}
+\PocetStran{ix\,$+$\,45}
 
-\KlicovaSlova{Klíčové slovo;}
+\KlicovaSlova{PerfCake; testování softvéru; optimalizace; grafy; jadrové odhady; směrodatná odchylka; Nadaraya-Watsonove odhady; redukční algoritmy}{Perfcake; software testing; optimalization; graphs; kernel estimations; standard deviation; Nadaraya-Watson estimations; reduction algorithms}
 
 \Abstrakty%
-{V této bakalářské/diplomové/rigorózní práci se věnujeme ...}%
-{In this thesis we study ...}
+{V této bakalářské práci se věnujeme návrhu algoritmů pro optimalizaci vizualizace dat, které jsou výstupem nástroje pro testování výkonu PerfCake. V práci jsou popsány dvě části algoritmů, vyhlazovací a redukční. Při vyhlazování jsou používány jádrové odhady, pro redukční část jsou představeny tři různé algoritmy, které jsou na konci práce porovnány. Podle několika aspektů je zvolen nejlepší, reálně použitelný algoritmus na optimalizaci dat, pro vykreslení do grafů.}%
+{In this bachelor thesis we design algorithms to optimize vizualization of data, which are output of the testing tool - PerfCake. These algorithms are composed of two parts, smoothing and reduction. The kernel estimation, that is used for smoothing part, and three diffrent reduction algorithms are introduced in fifth chapter. All three reduction algorithms are afterwards compared in the last, sixth chapter. They are compared in few different aspects, the best algorithm is suitable for real use to optimize data visualization in the PerfCake tool.}
 
 \TextPodekovani%
-{Na tomto místě bych chtěl(-a) poděkovat ...}
+{Na tomto mieste by som chcela poďakovať vedúcemu bakalárskej práce Mgr. Jiřímu Zelinkovi,
+Dr. a odborným konzultantom Mgr. Martinovi Večeřovi a Ing. Pavlovi Macíkovi za veľkú pomoc, dôkladné korektúry, odborné rady, inšpiráciu a hlavne za čas, ktorý mi pri písaní tejto práce venovali. Veľká vďaka patrí tiež mojej rodine a priateľom,
+ktorí ma počas štúdia podporovali.
+}
 
 \TextProhlaseni%
 {Prohlašuji, že jsem svoji bakalářskou práci vypracovala samostatně s~využitím informačních
 zdrojů, které jsou v práci citovány.}
 
-\DatumProhlaseni{xx. měsíce 20xx}
+\DatumProhlaseni{3. ledna 2017}
 
 %%%%%%%%%%%%
 %% Konkrétní příklad
@@ -168,7 +172,7 @@ zdrojů, které jsou v práci citovány.}
 % slovo; Klíčové slovo}{Keyword; Keyword; Keyword; Keyword; Keyword; Keyword; Keyword; Keyword; Keyword}
 % 
 % \Abstrakty%
-% {V této bakalářské/diplomové práci se věnujeme ...}%
+% {V této bakalářské práci se věnujeme ...}%
 % {In this thesis we study ...}
 % 
 % \TextPodekovani%
@@ -222,9 +226,9 @@ zdrojů, které jsou v práci citovány.}
 % 
 \StudijniOborSLOVENSKY{Modelovanie a výpočty}
 % 
-\KlicovaSlovaSLOVENSKY{bbb}
+\KlicovaSlovaSLOVENSKY{PerfCake; testovanie softvéru; optimalizácia; grafy; jadrové odhady; smerodajná odchýlka; Nadaraya-Watsonove odhady; redukčné algoritmy}
 % 
-\AbstraktSLOVENSKY{...}
+\AbstraktSLOVENSKY{V tejto bakalárskej práci sa venujeme návrhu algoritmov pre optimalizáciu vizualizácie dát, ktoré sú výstupom nástroja na testovanie výkonu PerfCake. V práci sú opísané dve časti algoritmov, vyhladzovacia a redukčná. Pri vyhladzovaní sú používané jadrové odhady, pre redukčnú časť sú predstavené tri rôzne algoritmy, ktoré sú na konci práce porovnané. Podľa niekoľkých aspektov je zvolený najlepší, reálne použiteľný algoritmus na optimalizáciu dát, pre vykreslenie do grafov.}
 % 
 \VytvorPovinneStranySLOVENSKY
 %
@@ -263,10 +267,10 @@ zdrojů, které jsou v práci citovány.}
 %%%%%% PAK ''ZAPROCENTUJTE'' RADEK S \SemVlozitZadani A ODPROCENTUJTE RADEK S \VlozZadani %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\SemVlozitZadani
+%\SemVlozitZadani
 
 % \VlozZadani{NazevSouboruSeZadanim}
-% \VlozZadani{zadani.pdf}
+\VlozZadani{zadanie.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% PODEKOVANI + PROHLASENI %%%%%%%%%%%%%%%
@@ -322,9 +326,12 @@ zdrojů, které jsou v práci citovány.}
 \vloz{text_prace/07_Kapitola_05}
 \cleardoublepage
 
+\vloz{text_prace/08_Kapitola_06}
+\cleardoublepage
+
 \HlavickaZaver
 % \pdfbookmark{Závěr}{Zaver}
-\vloz{text_prace/05_Zaver}
+\vloz{text_prace/09_Zaver}
 \cleardoublepage
 
 %\HlavickaPriloha
@@ -334,7 +341,7 @@ zdrojů, které jsou v práci citovány.}
 
 \renewcommand{\bibname}{Seznam použité literatury}
 \HlavickaLiteratura
-\vloz{text_prace/07_Literatura}
+\vloz{text_prace/10_Literatura}
 \cleardoublepage
 
 %\renewcommand{\indexname}{Rejstřík}

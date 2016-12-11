@@ -11,7 +11,7 @@ import static java.lang.Math.abs;
 public class FileOptimization {
 
     public static void main(String[] args) {
-        String csvFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/kernelEstimation30.csv";
+        String csvFile = "/Users/User/Documents/Skola/Bakina/Throughput/kernelEstimation30.csv";
         String line;
         String cvsSplitBy = ";";
         List<Double> window = new ArrayList<>();
@@ -65,7 +65,7 @@ public class FileOptimization {
                 //if (Math.abs(average - nextValue) > deviationBefore * 2){
                 //if(Math.abs(Math.sqrt(variance) - Math.sqrt(varianceBefore)) > 0.01){
                 //if(abs(average - nextValue) > 0.15 ){
-                if(standartDeviation > deviationBefore*1.3){
+                if(standartDeviation > deviationBefore*1.2){
                     //result.put(lastTime, Double.valueOf(lastValue));
                     result.put(values[0], nextValue);
                 } else{
@@ -83,7 +83,7 @@ public class FileOptimization {
             e.printStackTrace();
         }
 
-        String resultFile = "/Users/User/Documents/Skola/Bakina/ThroughputConst/smerodjanaPriemer301,4.csv";
+        String resultFile = "/Users/User/Documents/Skola/Bakina/Throughput/smerodajna301,2.csv";
 
         //Integer valueCounter = 0;
         try (FileWriter writer = new FileWriter(resultFile)) {

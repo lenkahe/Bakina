@@ -8,7 +8,7 @@ public class KernelEstimator {
     private Double max = 0.0;
     private Double min = 10000.0;
 
-    public Map<Integer, List<Double>> kernelEstimate(Map<Integer, Double> timeSeries, Integer smoothingWindow) {
+    public Map<Integer, List<Double>> kernelEstimate(Map<Integer, Double> timeSeries, Integer smoothingWindow, Integer n) {
 
         Map<Integer, List<Double>> result = new LinkedHashMap<>();
         List<Map.Entry<Integer, Double>> subMap;
@@ -16,24 +16,37 @@ public class KernelEstimator {
         int counter = 0;
         while (true) {
 
-            subMap = entryList.subList(counter, counter + 2*smoothingWindow < timeSeries.size() ? counter + 2*smoothingWindow : timeSeries.size());
-
+            if (n == 1) {
+                subMap = entryList.subList(counter, counter + 2 * smoothingWindow < timeSeries.size() ? counter + 2 * smoothingWindow : timeSeries.size());
+            } else {
+                if (counter + smoothingWindow < timeSeries.size()){
+                    subMap = entryList.subList(counter, counter + 2 * smoothingWindow < timeSeries.size() ? counter + 2 * smoothingWindow : timeSeries.size());
+                } else {
+                    subMap = entryList.subList(timeSeries.size() - smoothingWindow - 1, timeSeries.size());
+                }
+            }
             if (counter == 0) {
-                for (int j = 0; j <= smoothingWindow; j = j+1) {
+                int j;
+                for (j = 0; j <= smoothingWindow; j = j + n ) {
                 //for (Map.Entry<Integer, Double> value : subMap) {
                     kernelEstimateForX(result, subMap.subList(counter, j + smoothingWindow), subMap.get(j), smoothingWindow);
                 }
+                counter = j - smoothingWindow;
+                continue;
             } else  if(counter + 2*smoothingWindow > timeSeries.size()){
-                for (int j = smoothingWindow; j < subMap.size(); j = j+1){
+                for (int j = smoothingWindow; j < subMap.size(); j = j + n){
                     kernelEstimateForX(result, subMap.subList(j - smoothingWindow, subMap.size()), subMap.get(j), smoothingWindow);
+                }
+                if(!subMap.isEmpty()) {
+                    kernelEstimateForX(result, subMap.subList(subMap.size() - smoothingWindow, subMap.size()), subMap.get(subMap.size() - 1), smoothingWindow);
                 }
                 break;
             } else{
                 kernelEstimateForX(result, subMap, subMap.get(smoothingWindow), smoothingWindow);
             }
 
-            //counter = counter + 30;
-            counter = counter + 1;
+            //counter = counter + 1;
+            counter = counter + n;
         }
         return result;
     }
